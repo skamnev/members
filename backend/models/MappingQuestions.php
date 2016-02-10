@@ -95,7 +95,7 @@ class MappingQuestions extends \yii\db\ActiveRecord
             'id' => Yii::t('backend', 'ID'),
             'title' => Yii::t('backend', 'Title'),
             'category_id' => Yii::t('backend', 'Category ID'),
-            'is_active' => Yii::t('backend', 'Status Active'),
+            'is_active' => Yii::t('backend', 'Active'),
             'is_required'=> Yii::t('backend', 'Required'),
             'has_other'=> Yii::t('backend', 'Has Other'),
             'type_id' => Yii::t('backend', 'Type'),

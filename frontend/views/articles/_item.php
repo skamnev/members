@@ -5,12 +5,9 @@ use yii\helpers\Html;
 <div class="pages-item">
 
     <hr/>
-    <strong></b><?=$model->content_heading?$model->content_heading:$model->title;?></strong>
+    <strong><?= Html::a($model->content_heading?$model->content_heading:$model->title, ["article/$category->id/" . ($model->identifier?$model->identifier:$model->id)], ['class' => '']) ?></strong>
 
-    <?php if ($model->content):?>
+    <?php if ($model->content && false):?>
         <p><?=$model->content;?></p>
     <?php endif;?>
-    <div>
-        <?= Html::a(Yii::t('frontend', 'More...'), ['article/' . ($model->identifier?$model->identifier:$model->id)], ['class' => '']) ?>
-    </div>
 </div>

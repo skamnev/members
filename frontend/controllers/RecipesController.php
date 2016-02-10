@@ -108,10 +108,10 @@ class RecipesController extends MainController
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($category_id, $id)
     {
         $model = $this->findModel($id);
-        $category = CmsRecipesCategories::findOne(['id' => $model->category_id]);
+        $category = CmsRecipesCategories::findOne(['id' => $category_id]);
 
         return $this->render('view', [
             'model' => $model,

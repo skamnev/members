@@ -13,7 +13,11 @@ $this->params['breadcrumbs'][] = Yii::t('backend', 'Update') . ' ' . $model->tit
 <div class="cms-pages-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    
+    <p>
+        <?= Html::a(Yii::t('backend', 'Preview'), ["../../" . Yii::$app->language ."/article/$categoryModel->id/" . ($model->identifier?$model->identifier:$model->id)], ['class' => 'btn btn-success', 'target'=>'_blank']) ?>
+    </p>
+    
     <?= $this->render('_form', [
         'model' => $model,
         'languages' => $languages,

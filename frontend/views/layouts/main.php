@@ -38,7 +38,7 @@ AppAsset::register($this);
         ],
     ]);
 
-    if (\frontend\models\User::isActive()) {
+    if (\frontend\models\User::isActive() || true) {
         $menuItems = [
             ['label' => Yii::t('frontend', 'My Page'),
                 'items' => [

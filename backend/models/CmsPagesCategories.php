@@ -106,7 +106,7 @@ class CmsPagesCategories extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('backend', 'ID'),
             'title' => Yii::t('backend', 'Title'),
-            'status' => Yii::t('backend', 'Status'),
+            'status' => Yii::t('backend', 'Active'),
             'sort_order' => Yii::t('backend', 'Sort Order'),
             'created_at' => Yii::t('backend', 'Created At'),
             'updated_at' => Yii::t('backend', 'Updated At'),

@@ -64,7 +64,7 @@ class Members extends \yii\db\ActiveRecord
             'password_reset_token' => Yii::t('backend', 'Password Reset Token'),
             'email' => Yii::t('backend', 'Email'),
             'braintree_customer_id' => Yii::t('backend', 'Braintree Customer ID'),
-            'status' => Yii::t('backend', 'Status'),
+            'status' => Yii::t('backend', 'Active'),
             'created_at' => Yii::t('backend', 'Created At'),
             'updated_at' => Yii::t('backend', 'Updated At'),
         ];

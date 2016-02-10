@@ -109,10 +109,10 @@ class ArticlesController extends MainController
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($category_id, $id)
     {
         $model = $this->findModel($id);
-        $category = CmsPagesCategories::findOne(['id' => $model->category_id]);
+        $category = CmsPagesCategories::findOne(['id' => $category_id]);
 
         return $this->render('view', [
             'model' => $model,

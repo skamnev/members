@@ -97,7 +97,7 @@ class MembersAttributes extends \yii\db\ActiveRecord
             'type_id' => Yii::t('backend', 'Type ID'),
             'label' => Yii::t('backend', 'Label'),
             'order' => Yii::t('backend', 'Order'),
-            'is_active' => Yii::t('backend', 'Status Active'),
+            'is_active' => Yii::t('backend', 'Active'),
             'is_required'=> Yii::t('backend', 'Required'),
             'created_at' => Yii::t('backend', 'Created At'),
             'updated_at' => Yii::t('backend', 'Updated At'),

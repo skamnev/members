@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $category->title;
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
         'itemView' => '_item',
+        'viewParams' => ['category' => $category],
         'options' => [
             'tag' => 'div',
             'class' => 'list-wrapper',
