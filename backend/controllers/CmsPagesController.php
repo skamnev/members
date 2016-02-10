@@ -118,14 +118,12 @@ class CmsPagesController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $category_id)
     {
         $model = $this->findModel($id);
-        $categoryId = $model->category_id;
-
         $model->delete();
 
-        return $this->redirect(['cms-pages-categories/view', 'category_id' => $categoryId]);
+        return $this->redirect(['cms-pages-categories/view', 'category_id' => $category_id]);
     }
 
     /**
