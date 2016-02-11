@@ -136,4 +136,4 @@ $('#cmspages-title_en').keyup(function(){
     }
 });
 ", yii\web\View::POS_READY , 'my-options');
-?>
+*/?>
