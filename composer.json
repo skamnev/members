@@ -28,6 +28,7 @@
         "yii-dream-team/yii2-upload-behavior": "*",
         "kartik-v/yii2-widget-fileinput": "@dev",
         "yiidoc/yii2-redactor": "*",
+        "perminder-klair/yii2-videojs": "dev-master",
         "bryglen/yii2-braintree": "*"
     },
     "require-dev": {

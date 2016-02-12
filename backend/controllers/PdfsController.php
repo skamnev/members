@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\PdfsRules;
+use backend\models\MappingCategories;
 use Yii;
 use backend\models\Pdfs;
 use backend\models\PdfsSearch;
@@ -85,13 +86,15 @@ class PdfsController extends Controller
             $languageDefault = Lang::findOne(['default' => 1]);
 
             $rulesDataProvider = null;
-
+            $mappingCategories = new MappingCategories();
+            
             return $this->render('create', [
                 'model' => $model,
                 'languages' => $languages,
                 'languageDefault' => $languageDefault,
                 'rulesDataProvider' => $rulesDataProvider,
                 'rulesModel' => $rulesModel,
+                'mappingCategories' => $mappingCategories,
             ]);
         }
     }
@@ -120,6 +123,7 @@ class PdfsController extends Controller
             $rulesDataProvider = new ActiveDataProvider([
                 'query' => $rules,
             ]);
+            $mappingCategories = new MappingCategories();
 
             return $this->render('update', [
                 'model' => $model,
@@ -127,6 +131,7 @@ class PdfsController extends Controller
                 'languageDefault' => $languageDefault,
                 'rulesDataProvider' => $rulesDataProvider,
                 'rulesModel' => $rulesModel,
+                'mappingCategories' => $mappingCategories,
             ]);
         }
     }

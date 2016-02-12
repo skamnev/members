@@ -1,0 +1,21 @@
+{
+    "name": "perminder-klair/yii2-videojs",
+    "description": "VideoJs Player for Yii2",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension"," videojs"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Parminder Klair",
+            "email": "perminder.klair@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "kato\\": ""
+        }
+    }
+}

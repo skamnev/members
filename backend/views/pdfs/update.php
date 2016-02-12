@@ -28,6 +28,7 @@ $this->registerJsFile(Yii::getAlias('@web/js/rules.js'), ['depends' => [
         'languageDefault' => $languageDefault,
         'rulesModel' => $rulesModel,
         'rulesDataProvider' => $rulesDataProvider,
+        'mappingCategories' => $mappingCategories,
     ]) ?>
 
 </div>

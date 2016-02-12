@@ -1,0 +1,7 @@
+{
+  "name": "yii2-videojs",
+  "version": "0.0.1",
+  "dependencies": {
+    "video-js": "~4.12.3"
+  }
+}

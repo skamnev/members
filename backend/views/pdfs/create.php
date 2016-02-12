@@ -25,6 +25,7 @@ $this->registerJsFile(Yii::getAlias('@web/js/questions.js'), ['depends' => [
         'languages' => $languages,
         'languageDefault' => $languageDefault,
         'rulesModel' => $rulesModel,
+        'mappingCategories' => $mappingCategories,
     ]) ?>
 
 </div>

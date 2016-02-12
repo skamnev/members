@@ -28,6 +28,7 @@ return array(
     'omgdef\\multilingual\\' => array($vendorDir . '/omgdef/yii2-multilingual-behavior/src'),
     'moonland\\helpers\\' => array($vendorDir . '/moonlandsoft/helpers'),
     'linslin\\yii2\\curl\\' => array($vendorDir . '/linslin/yii2-curl'),
+    'kato\\' => array($vendorDir . '/perminder-klair/yii2-videojs'),
     'kartik\\plugins\\fileinput\\' => array($vendorDir . '/kartik-v/bootstrap-fileinput'),
     'kartik\\file\\' => array($vendorDir . '/kartik-v/yii2-widget-fileinput'),
     'kartik\\base\\' => array($vendorDir . '/kartik-v/yii2-krajee-base'),

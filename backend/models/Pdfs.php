@@ -24,6 +24,10 @@ use yii\helpers\ArrayHelper;
  */
 class Pdfs extends \yii\db\ActiveRecord
 {
+    
+    const IS_ACTIVE = 1;
+    const NOT_ACTIVE = 0;
+    
     public function behaviors()
     {
         $languagesModel = Lang::find()->all();
@@ -131,8 +135,8 @@ class Pdfs extends \yii\db\ActiveRecord
 
     public static function dropdownActive() {
         return ArrayHelper::map(array(
-            ['value' => Yii::t('backend','No'), 'id' => CmsPages::NOT_ACTIVE],
-            ['value' => Yii::t('backend','Yes'), 'id' => CmsPages::IS_ACTIVE]), 'id', 'value');
+            ['value' => Yii::t('backend','No'), 'id' => self::NOT_ACTIVE],
+            ['value' => Yii::t('backend','Yes'), 'id' => self::IS_ACTIVE]), 'id', 'value');
     }
 
     public static function find()

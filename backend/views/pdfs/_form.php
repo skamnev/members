@@ -98,7 +98,7 @@ use yii\grid\GridView;
 
                 $rulesModel->pdf_id = $model->id;
 
-                echo $this->render('/pdfs-rules/create', ['model' => $rulesModel, 'languages' => $languages,'languageDefault' => $languageDefault]);
+                echo $this->render('/pdfs-rules/create', ['model' => $rulesModel, 'languages' => $languages,'languageDefault' => $languageDefault, 'mappingCategories' => $mappingCategories,]);
                 Modal::end();
                 ?>
             </p>

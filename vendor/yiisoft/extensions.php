@@ -138,4 +138,13 @@ return array (
       '@yii/redactor' => '/',
     ),
   ),
+  'perminder-klair/yii2-videojs' => 
+  array (
+    'name' => 'perminder-klair/yii2-videojs',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@kato' => $vendorDir . '/perminder-klair/yii2-videojs',
+    ),
+  ),
 );

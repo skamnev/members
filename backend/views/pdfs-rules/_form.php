@@ -55,6 +55,9 @@ use yii\bootstrap\Tabs;
             $answers_options['options'] = [$model->options_id => ['Selected'=>'selected']];
         }
 
+        $question_items = array();
+        $options_items = array();
+    
         if (!$model->isNewRecord) {
             $question_items = \yii\helpers\ArrayHelper::map(\backend\models\MappingQuestions::find()->joinWith('fieldsTypes')->where($questions_condition)->all(), 'id', 'title');
             $options_items = \yii\helpers\ArrayHelper::map(\backend\models\MappingQuestionsToOptions::find()->where($answers_condition)->all(), 'id', 'title');
