@@ -45,6 +45,7 @@ AppAsset::register($this);
         ['label' => Yii::t('backend', 'Users'), 'url' => ['/user-management/user/index']],
         ['label' => Yii::t('backend', 'Members'), 'url' => ['/members/index']],
         ['label' => Yii::t('backend', 'PDFs'), 'url' => ['/pdfs']],
+        ['label' => Yii::t('backend', 'Videos'), 'url' => ['/videos']],
         ['label' => Yii::t('backend', 'Mapping'),
             'items' => [
                 ['label' => Yii::t('backend','Categories'), 'url' => ['/mapping-categories/index']],
