@@ -92,8 +92,15 @@ class MembersController extends MainController {
      */
     public function actionWeightTracker()
     {
-        $settingsModel = GeneralSettings::findOne(['name' => 'weight_tracker_frequence']);
         $userModel = Yii::$app->user->getIdentity();
+        
+        if ($userModel->load(Yii::$app->request->post()) && $userModel->save()) {
+            Yii::$app->getSession()->setFlash('success', 'Successfully updated.');
+        } else {
+            
+        }
+        
+        $settingsModel = GeneralSettings::findOne(['name' => 'weight_tracker_frequence']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => MembersWeightTracker::find()->where(['member_id' => Yii::$app->getUser()->id]),
@@ -118,6 +125,7 @@ class MembersController extends MainController {
             'startingWeight' => empty($userModel->weight)?'':$userModel->weight,
             'currentWeight' => $currentWeight,
             'allowAddWeight' => $allowAddWeight,
+            'userModel' => $userModel,
         ]);
     }
 
@@ -129,9 +137,10 @@ class MembersController extends MainController {
      */
     public function actionWeightTrackerAdd()
     {
+        $settingsModel = GeneralSettings::findOne(['name' => 'weight_tracker_frequence']);
         $weightTracker = MembersWeightTracker::find(['member_id' => Yii::$app->getUser()->id])->orderBy(['created_at'=>SORT_DESC])->one();
 
-        if ((time() - strtotime($weightTracker->created_at))<(MembersWeightTracker::UPDATES_FREQUENCY*3600*24)) {
+        if ((time() - strtotime($weightTracker->created_at))<($settingsModel->value*3600*24)) {
             return $this->redirect(['weight-tracker']);
         }
 

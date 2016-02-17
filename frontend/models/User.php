@@ -51,6 +51,23 @@ class User extends ActiveRecord implements IdentityInterface
                 ],*/
                 'value' => new Expression('NOW()'),
             ],
+            [
+                'class' => '\yiidreamteam\upload\ImageUploadBehavior',
+                'attribute' => 'avatar',
+                'thumbs' => [
+                    'thumb' => ['width' => 300, 'height' => 200],
+                ],
+                'filePath' => '@webroot/media/members/avatar-[[pk]].[[extension]]',
+                'fileUrl' => '@web/media/members/avatar-[[pk]].[[extension]]',
+                'thumbPath' => '@webroot/media/members/avatar-[[profile]]_[[pk]].[[extension]]',
+                'thumbUrl' => '@web/media/members/avatar-[[profile]]_[[pk]].[[extension]]',
+            ],
+            /*[
+                'class' => '\yiidreamteam\upload\FileUploadBehavior',
+                'attribute' => 'avatar',
+                'filePath' => '@webroot/media/members/avatar-[[pk]].[[extension]]',
+                'fileUrl' => '@web/media/members/avatar-[[pk]].[[extension]]',
+            ],*/
         ];
     }
 
@@ -65,6 +82,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['birthday'], 'date', 'format' => 'dd.mm.yyyy'],
             [['firstname', 'lastname'], 'string', 'max' => 128],
             [['weight', 'height'], 'integer'],
+            ['avatar', 'file', 'extensions' => 'jpeg, jpg, gif, png'],
             [['braintree_customer_id', 'birthday', 'last_payment_date', 'change_password'], 'safe'],
             ['status', 'default', 'value' => self::STATUS_UNPAID],
             ['status', 'in', 'range' => [self::STATUS_DELETED, self::STATUS_ACTIVE, self::STATUS_PAID, self::STATUS_UNPAID, self::STATUS_INACTIVE]],
