@@ -20,19 +20,35 @@ class PdfsComponent extends Component {
         $pdfs = Pdfs::find()->where(['is_active' => 1])->orderBy('order, name');
 
         foreach ($pdfs->all() as $_pdf) {
-            $pdf_rules = PdfsRules::find()->where(['is_active' => 1, 'pdf_id' => $_pdf->id]);
-
-            $memberAnswers = MembersQuestionsAnswers::find()->where(['member_id' => $member->id]);
-
-            foreach($pdf_rules->all() as $rule) {
-                $memberAnswers->andWhere(['in', 'option_id', $rule->options_id]);
-            }
-
-            if ($memberAnswers->count()) {
+            $pdf_rules_match_count = $this->getPdfRule($member->id, $_pdf->id);
+            if ($pdf_rules_match_count) {
                 $this->pdfs[] = $_pdf;
             }
         }
 
         return $this->pdfs;
+    }
+    
+    public function getAvailablePdfById($member, $pdfId) {
+        $pdf = Pdfs::findOne(['is_active' => 1, 'id' => $pdfId]);
+        
+        $pdf_rules_match_count = $this->getPdfRule($member->id, $pdfId);
+        if ($pdf_rules_match_count) {
+            return $pdf;
+        }
+        
+        return false;
+    }
+    
+    private function getPdfRule($memberId, $pdfId) {
+        $pdf_rules = PdfsRules::find()->where(['is_active' => 1, 'pdf_id' => $pdfId]);
+
+        $memberAnswers = MembersQuestionsAnswers::find()->where(['member_id' => $memberId]);
+
+        foreach($pdf_rules->all() as $rule) {
+            $memberAnswers->andWhere(['in', 'option_id', $rule->options_id]);
+        }
+
+        return $memberAnswers->count();
     }
 }

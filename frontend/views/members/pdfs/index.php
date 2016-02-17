@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 
 $this->title = 'My PDFs';
+$full_name = Yii::$app->user->identity->firstname . ' ' . Yii::$app->user->identity->lastname;
 ?>
 <h1>My PDFs page</h1>
 
@@ -18,8 +19,8 @@ $this->title = 'My PDFs';
     <tbody>
     <?php foreach($pdfs_listing as $pdf) :?>
         <tr>
-            <td><?= $pdf->name?></td>
-            <td><?= Html::a($pdf->file, $pdf->getUploadedFileUrl('file'), array('target' => '_blank')) ?></td>
+            <td><?= $full_name?></td>
+            <td><?= Html::a($full_name, ['members/pdf-download/' . $pdf->id], array('target' => '_blank')) ?></td>
         </tr>
     <?php endforeach ?>
     </tbody>

@@ -85,6 +85,26 @@ class MembersController extends MainController {
         return $this->render('pdfs/index', ['pdfs_listing' => $pdfs_listing]);
     }
 
+    public function actionPdfDownload($id) {
+        if (!Yii::$app->user->isGuest) {
+            $pdf = Yii::$app->PdfsComponent->getAvailablePdfById(Yii::$app->user->getIdentity(),$id);
+            
+            if ($pdf) {
+                $file_path = $pdf->getUploadedFilePath('file');
+
+                if (file_exists($file_path)) {
+                    $file_path = $pdf->getUploadedFilePath('file');
+
+                    $full_name = Yii::$app->user->identity->firstname . ' ' . Yii::$app->user->identity->lastname;
+                    header('Content-Type: application/pdf');
+                    header('Content-Disposition: attachment; filename="' . $full_name . '.pdf"');
+
+                    readfile($file_path);
+                }
+            }
+        }
+    }
+
     /**
      * Displays weight tracker page.
      *

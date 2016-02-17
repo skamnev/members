@@ -52,8 +52,8 @@ class Pdfs extends \yii\db\ActiveRecord
             [
                 'class' => '\yiidreamteam\upload\FileUploadBehavior',
                 'attribute' => 'file',
-                'filePath' => '@webroot/media/pdfs/pages/[[pk]]/[[filename]].[[extension]]',
-                'fileUrl' => '@web/media/pdfs/pages/[[pk]]/[[filename]].[[extension]]',
+                'filePath' => Yii::getAlias('@backend') . '/web/media/pdfs/pages/[[pk]]/[[filename]].[[extension]]',
+                'fileUrl' => Yii::getAlias('@backend') . '/web/media/pdfs/pages/[[pk]]/[[filename]].[[extension]]',
             ],
             'timestamp' => [
                 'class' => 'yii\behaviors\TimestampBehavior',
