@@ -54,6 +54,17 @@ class CmsRecipesController extends Controller
         ]);
     }*/
 
+    public function actionPreview ($id, $category_id)
+    {
+        $model = $this->findModel($id);
+        $category = CmsRecipesCategories::findOne(['id' => $category_id]);
+
+        $this->layout = 'preview';
+        return $this->render('@frontend/views/recipes/view', [
+            'model' => $model,
+            'category' => $category
+        ]);
+    }
     /**
      * Creates a new CmsRecipes model.
      * If creation is successful, the browser will be redirected to the 'view' page.

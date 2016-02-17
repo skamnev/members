@@ -54,6 +54,17 @@ class CmsPagesController extends Controller
         ]);
     }*/
 
+    public function actionPreview ($id, $category_id)
+    {
+        $model = $this->findModel($id);
+        $category = CmsPagesCategories::findOne(['id' => $category_id]);
+
+        $this->layout = 'preview';
+        return $this->render('@frontend/views/articles/view', [
+            'model' => $model,
+            'category' => $category
+        ]);
+    }
     /**
      * Creates a new CmsPages model.
      * If creation is successful, the browser will be redirected to the 'view' page.
