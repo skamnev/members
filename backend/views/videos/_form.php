@@ -70,6 +70,7 @@ use dosamigos\datepicker\DatePicker;
     ])->label(Yii::t('backend','Video File'));
     ?>
     
+    <?php if (!$model->isNewRecord ): ?>
     <div class="row">
         <div class="col-md-6">
             <?= \kato\VideojsWidget::widget([
@@ -121,6 +122,7 @@ use dosamigos\datepicker\DatePicker;
     <br/>
     <?= Html::a($model->file, $model->getUploadedFileUrl('file'), array('target' => '_blank')) ?>
     <br/><br/>
+    <?php endif;?>
     
     <?= $form->field($model, 'status')->checkbox(['label' => Yii::t('backend','Active')]); ?>
 
