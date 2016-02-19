@@ -9,7 +9,7 @@ use omgdef\multilingual\MultilingualQuery;
 use yii\helpers\ArrayHelper;
 
 /**
- * This is the model class for table "cms_recipes".
+ * This is the model class for table "cms_faq".
  *
  * @property integer $id
  * @property string $title
@@ -24,9 +24,9 @@ use yii\helpers\ArrayHelper;
  * @property integer $is_active
  * @property integer $sort_order
  *
- * @property CmsPagesLang[] $cmsRecipesLangs
+ * @property CmsFaqLang[] $cmsFaqsLangs
  */
-class CmsRecipes extends \yii\db\ActiveRecord
+class CmsFaq extends \yii\db\ActiveRecord
 {
     const IS_ACTIVE = 1;
     const NOT_ACTIVE = 0;
@@ -46,22 +46,15 @@ class CmsRecipes extends \yii\db\ActiveRecord
                 'class' => MultilingualBehavior::className(),
                 'languages' => $languages,
                 'defaultLanguage' => $languageDefault->url,
-                'langForeignKey' => 'recipe_id',
-                'tableName' => "{{%cms_recipes_lang}}",
+                'langForeignKey' => 'faq_id',
+                'tableName' => "{{%cms_faq_lang}}",
                 'attributes' => [
-                    'title', 'content', 'content_heading', 'meta_keywords', 'meta_description'
+                    'title', 'content'
                 ]
             ],
-            [
-                'class' => '\yiidreamteam\upload\ImageUploadBehavior',
-                'attribute' => 'main_img',
-                'thumbs' => [
-                    'thumb' => ['width' => 300, 'height' => 200],
-                ],
-                'filePath' => '@webroot/media/cms/recipes/[[pk]]/[[pk]].[[extension]]',
-                'fileUrl' => '@web/media/cms/recipes/[[pk]]/[[pk]].[[extension]]',
-                'thumbPath' => '@webroot/media/cms/recipes/[[pk]]/[[profile]]_[[pk]].[[extension]]',
-                'thumbUrl' => '@web/media/cms/recipes/[[pk]]/[[profile]]_[[pk]].[[extension]]',
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'value' => new Expression('NOW()'),
             ],
         ];
     }
@@ -71,7 +64,7 @@ class CmsRecipes extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%cms_recipes}}';
+        return '{{%cms_faq}}';
     }
 
     /**
@@ -96,13 +89,11 @@ class CmsRecipes extends \yii\db\ActiveRecord
         }
 
         $rules_general = [
-            [['content', 'meta_keywords', 'meta_description'], 'string'],
-            [['code_id', 'no_code_id', 'category_id', 'created_at', 'updated_at'], 'safe'],
+            [['content'], 'string'],
+            [['category_id', 'created_at', 'updated_at'], 'safe'],
             [['is_active', 'author', 'sort_order'], 'integer'],
             [['category_id'], 'required', 'message' => Yii::t('backend', 'Please select at least one Category')],
-            [['publish_date'], 'date', 'format' => 'dd.mm.yyyy'],
-            [['title', 'content_heading'], 'string', 'max' => 255],
-            ['main_img', 'file', 'extensions' => 'jpeg, jpg, gif, png'],
+            [['title'], 'string', 'max' => 255],
             [['identifier'], 'string', 'max' => 128]
         ];
 
@@ -116,30 +107,26 @@ class CmsRecipes extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('backend', 'Recipe ID'),
+            'id' => Yii::t('backend', 'Faq ID'),
             'author' => Yii::t('backend', 'Author ID'),
-            'title' => Yii::t('backend', 'Recipe Title'),
-            'content' => Yii::t('backend', 'Recipe Content'),
-            'content_heading' => Yii::t('backend', 'Recipe Heading'),
-            'identifier' => Yii::t('backend', 'Recipe Url Key'),
-            'code_id' => Yii::t('backend', 'Include Recipe Code IDs'),
-            'no_code_id' => Yii::t('backend', 'Exclude Recipe Code IDs'),
-            'category_id' => Yii::t('backend', 'Category ID'),
-            'meta_keywords' => Yii::t('backend', 'Recipe Keywords'),
-            'meta_description' => Yii::t('backend', 'Recipe Description'),
-            'created_at' => Yii::t('backend', 'Recipe Created'),
-            'updated_at' => Yii::t('backend', 'Recipe Updated'),
-            'is_active' => Yii::t('backend', 'Is Recipe Active'),
-            'sort_order' => Yii::t('backend', 'Recipe Order'),
+            'title' => Yii::t('backend', 'Faq Title'),
+            'content' => Yii::t('backend', 'Faq Content'),
+            'identifier' => Yii::t('backend', 'Faq Url Key'),
+            'mapping_id' => Yii::t('backend', 'Mapping Category ID'),
+            'category_id' => Yii::t('backend', 'Category'),
+            'is_active' => Yii::t('backend', 'Is Faq Active'),
+            'sort_order' => Yii::t('backend', 'Faq Order'),
+            'created_at' => Yii::t('backend', 'Faq Created'),
+            'updated_at' => Yii::t('backend', 'Faq Updated'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCmsRecipesLangs()
+    public function getCmsFaqLangs()
     {
-        return $this->hasMany(CmsRecipesLang::className(), ['recipe_id' => 'id']);
+        return $this->hasMany(CmsFaqLang::className(), ['faq_id' => 'id']);
     }
 
     public static function find()
@@ -147,14 +134,14 @@ class CmsRecipes extends \yii\db\ActiveRecord
         return new MultilingualQuery(get_called_class());
     }
 
+    public function beforeValidate() {
+        return parent::beforeValidate();
+    }
+
     public function beforeSave($insert)
     {
         if ($this->isNewRecord) {
             $this->author = Yii::$app->user->id;
-        }
-
-        if (!empty($this->publish_date)) {
-            $this->publish_date = date('Y-m-d H:i:s',strtotime($this->publish_date));
         }
 
         if (empty($this->identifier)) {
@@ -165,16 +152,6 @@ class CmsRecipes extends \yii\db\ActiveRecord
             $category_ids = '[' . implode("],[", $this->category_id) . ']';
             $this->category_id = $category_ids;
         }
-
-        if (!empty($this->code_id)) {
-            $code_ids = '[' . implode("],[", $this->code_id) . ']';
-            $this->code_id = $code_ids;
-        }
-
-        if (!empty($this->no_code_id)) {
-            $no_code_ids = '[' . implode("],[", $this->no_code_id) . ']';
-            $this->no_code_id = $no_code_ids;
-        }
         return parent::beforeSave($insert);
     }
 
@@ -182,13 +159,11 @@ class CmsRecipes extends \yii\db\ActiveRecord
     {
         parent::afterFind();
         $this->category_id = preg_split('/[\[\],]/i', $this->category_id, -1, PREG_SPLIT_NO_EMPTY);//explode(',', $this->category_id);
-        $this->code_id = preg_split('/[\[\],]/i', $this->code_id, -1, PREG_SPLIT_NO_EMPTY);//explode(',', $this->code_id);
-        $this->no_code_id = preg_split('/[\[\],]/i', $this->no_code_id, -1, PREG_SPLIT_NO_EMPTY);//explode(',', $this->no_code_id);
     }
 
     public static function dropdownActive() {
         return ArrayHelper::map(array(
-            ['value' => Yii::t('backend','No'), 'id' => CmsRecipes::NOT_ACTIVE],
-            ['value' => Yii::t('backend','Yes'), 'id' => CmsRecipes::IS_ACTIVE]), 'id', 'value');
+            ['value' => Yii::t('backend','No'), 'id' => CmsFaq::NOT_ACTIVE],
+            ['value' => Yii::t('backend','Yes'), 'id' => CmsFaq::IS_ACTIVE]), 'id', 'value');
     }
 }

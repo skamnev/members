@@ -2,20 +2,22 @@
 
 namespace backend\controllers;
 
-use backend\models\CmsRecipesCategories;
-use backend\models\SearchCmsRecipes;
+use backend\models\SearchCmsFaqCategories;
 use Yii;
-use backend\models\CmsRecipes;
-use backend\models\Lang;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use backend\models\CmsFaqCategories;
+use backend\models\Lang;
+use backend\models\SearchCmsFaq;
+use backend\models\CmsFaq;
 
 /**
- * CmsRecipesController implements the CRUD actions for CmsRecipes model.
+ * CmsFaqCategoriesController implements the CRUD actions for CmsFaqCategories model.
  */
-class CmsRecipesController extends Controller
+class CmsFaqCategoriesController extends Controller
 {
     public function behaviors()
     {
@@ -40,115 +42,108 @@ class CmsRecipesController extends Controller
     }
 
     /**
-     * Lists all CmsRecipes models.
+     * Lists all CmsFaqCategories models.
      * @return mixed
      */
-    /*public function actionIndex()
+    public function actionIndex()
     {
-        $searchModel = new SearchCmsRecipes();
+        $searchModel = new SearchCmsFaqCategories();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
         ]);
-    }*/
+    }
 
-    public function actionPreview ($id, $category_id)
+    /**
+     * Displays a single CmsFaqCategories model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($category_id)
     {
-        $model = $this->findModel($id);
-        $category = CmsRecipesCategories::findOne(['id' => $category_id]);
+        $searchModel = new SearchCmsFaq(['category_id'=>$category_id]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $this->layout = 'preview';
-        return $this->render('@frontend/views/recipes/view', [
-            'model' => $model,
-            'category' => $category
+        return $this->render('view', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'category_id' => $category_id
         ]);
     }
+
     /**
-     * Creates a new CmsRecipes model.
+     * Creates a new CmsFaqCategories model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($category_id = null)
+    public function actionCreate()
     {
-        $model = new CmsRecipes();
+        $model = new CmsFaqCategories();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if ($category_id) {
-                return $this->redirect(['cms-recipes-categories/view', 'category_id' => $category_id]);
-            } else {
-                return $this->redirect(['cms-recipes-categories/index']);
-            }
+            return $this->redirect(['index']);
         } else {
             $languages = Lang::find()->all();
             $languageDefault = Lang::findOne(['default' => 1]);
-
-            $categoryModel = new CmsRecipesCategories;
-            if ($category_id) {
-                $categoryModel = CmsRecipesCategories::findOne($category_id);
-            }
 
             return $this->render('create', [
                 'model' => $model,
                 'languages' => $languages,
-                'languageDefault' => $languageDefault,
-                'categoryModel' => $categoryModel,
+                'languageDefault' => $languageDefault
             ]);
         }
     }
 
     /**
-     * Updates an existing CmsRecipes model.
+     * Updates an existing CmsFaqCategories model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id, $category_id)
+    public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['cms-recipes-categories/view', 'category_id' => $category_id]);
+            return $this->redirect(['index']);
         } else {
             $languages = Lang::find()->all();
             $languageDefault = Lang::findOne(['default' => 1]);
 
-            $categoryModel = CmsRecipesCategories::findOne($category_id);
-
             return $this->render('update', [
                 'model' => $model,
                 'languages' => $languages,
-                'languageDefault' => $languageDefault,
-                'categoryModel' => $categoryModel,
+                'languageDefault' => $languageDefault
             ]);
         }
     }
 
     /**
-     * Deletes an existing CmsRecipes model.
+     * Deletes an existing CmsFaqCategories model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id, $category_id)
+    public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        $model->delete();
+        $this->findModel($id)->delete();
+        CmsFaq::deleteAll(['category_id' => $id]);
 
-        return $this->redirect(['cms-recipes-categories/view', 'category_id' => $category_id]);
+        return $this->redirect(['index']);
     }
 
     /**
-     * Finds the CmsRecipes model based on its primary key value.
+     * Finds the CmsFaqCategories model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return CmsRecipes the loaded model
+     * @return CmsFaqCategories the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = CmsRecipes::find()->where(['id' => $id])->multilingual()->one()) !== null) {
+        if (($model = CmsFaqCategories::find()->where(['id' => $id])->multilingual()->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

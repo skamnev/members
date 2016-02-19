@@ -84,6 +84,7 @@ class CmsPagesController extends Controller
             $languages = Lang::find()->all();
             $languageDefault = Lang::findOne(['default' => 1]);
 
+            $categoryModel = new CmsPagesCategories;
             if ($category_id) {
                 $categoryModel = CmsPagesCategories::findOne($category_id);
             }

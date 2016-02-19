@@ -55,6 +55,7 @@ AppAsset::register($this);
             'items' => [
                 ['label' => Yii::t('backend','Pages'), 'url' => ['/cms-pages-categories/index']],
                 ['label' => Yii::t('backend','Recipes'), 'url' => ['/cms-recipes-categories/index']],
+                ['label' => Yii::t('backend','FAQ'), 'url' => ['/cms-faq-categories/index']],
             ]],
         ['label' => Yii::t('backend', 'General Settings'),
             'items' => [
