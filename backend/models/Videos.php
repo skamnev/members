@@ -92,7 +92,11 @@ class Videos extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             ['file', 'file', 'extensions' => ['pdf', 'mp4'], 'maxSize' => 1024 * 1024 * 300],
-            [['title'], 'string', 'max' => 255]
+            [['title'], 'string', 'max' => 255],
+            // Url адрес
+            ['external_url', 'unique', 'attributes'=>'url'],
+            ['external_url', 'string'],
+            ['external_url', 'match', 'pattern'=>'/[a-zA-Z0-9-_.]+$/'],
         ];
 
         return array_merge($language_rules, $rules_general);
@@ -104,13 +108,14 @@ class Videos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('frontend', 'ID'),
-            'title' => Yii::t('frontend', 'Title'),
-            'description' => Yii::t('frontend', 'Description'),
-            'file' => Yii::t('frontend', 'File Path'),
-            'status' => Yii::t('frontend', 'Active'),
-            'created_at' => Yii::t('frontend', 'Created At'),
-            'updated_at' => Yii::t('frontend', 'Updated At'),
+            'id' => Yii::t('backend', 'ID'),
+            'title' => Yii::t('backend', 'Title'),
+            'description' => Yii::t('backend', 'Description'),
+            'file' => Yii::t('backend', 'File Path'),
+            'status' => Yii::t('backend', 'Active'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'external_url' => Yii::t('backend', 'External Url'),
         ];
     }
 

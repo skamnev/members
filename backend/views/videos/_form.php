@@ -70,10 +70,19 @@ use dosamigos\datepicker\DatePicker;
     ])->label(Yii::t('backend','Video File'));
     ?>
     
+    <?= $form->field($model, 'external_url')->textInput(['maxlength' => true]); ?>
+    
     <?php if (!$model->isNewRecord ): ?>
+    <?php
+        $video_url = $model->external_url;
+        $internalVideo = $model->getUploadedFileUrl('file');
+        if ($internalVideo) {
+            $video_url = $internalVideo;
+        }
+    ?>
     <div class="row">
         <div class="col-md-6">
-            <?= \kato\VideojsWidget::widget([
+            <?=  $video = \kato\VideojsWidget::widget([
                 'options' => [
                     'class' => 'video-js vjs-default-skin vjs-big-play-centered',
                     //'poster' => 'http://vjs.zencdn.net/v/oceans.png',
@@ -85,8 +94,8 @@ use dosamigos\datepicker\DatePicker;
                 ],
                 'tags' => [
                     'source' => [
-                        ['src' => $model->getUploadedFileUrl('file'), 'type' => 'video/mp4', 'data-res' => '360'],
-                        //['src' => 'http://localhost/localhost.ilives/current_html/members/backend/web/media/videos/2/8CHINS.mp4', 'type' => 'video/mp4', 'data-res' => '720'],
+                            ['src' => $video_url, 'type' => 'video/mp4', 'data-res' => '360'],
+                            ['src' => $video_url, 'type' => 'video/mp4', 'data-res' => '720'],
                     ],
                 ],
                 'multipleResolutions' => true,
@@ -95,25 +104,6 @@ use dosamigos\datepicker\DatePicker;
         <div class="col-md-6">
             
             <?php
-                $video = \kato\VideojsWidget::widget([
-                    'options' => [
-                        'class' => 'video-js vjs-default-skin vjs-big-play-centered',
-                        //'poster' => 'http://vjs.zencdn.net/v/oceans.png',
-                        'controls' => true,
-                        'preload' => 'auto',
-                        'width' => '80%',
-                        'height' => 'auto',
-                        'data-setup' => '{ "plugins" : { "resolutionSelector" : { "default_res" : "720" } } }',
-                    ],
-                    'tags' => [
-                        'source' => [
-                            ['src' => $model->getUploadedFileUrl('file'), 'type' => 'video/mp4', 'data-res' => '360'],
-                            ['src' => $model->getUploadedFileUrl('file'), 'type' => 'video/mp4', 'data-res' => '720'],
-                        ],
-                    ],
-                    'multipleResolutions' => true,
-                ]);
-                
                 echo Html::label(Yii::t('backend', 'Embed Html Code'), 'videos_html_code');
                 echo Html::textarea('videos_html_code', $video,['rows' => 10, 'style' => 'width: 100%']);
             ?>
