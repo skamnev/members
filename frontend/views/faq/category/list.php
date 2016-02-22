@@ -10,7 +10,7 @@ use yii\helpers\Html;
             <?php $faq_list = $model->getCmsFaqList($model->id);?>
             <?php if ($faq_list->count() > 0):?>
                 <ul>
-                <?php foreach($faq_list->limit(3)->all() as $faq):?>
+                <?php foreach($faq_list->limit(3)->andWhere(['is_active' => 1])->all() as $faq):?>
                     <li><strong><?= Html::a($faq->title, ["faq/$model->id/" . ($faq->identifier?$faq->identifier:$faq->id)], ['class' => '']) ?></strong></li>
                 <?php endforeach;?>
                 </ul>

@@ -69,7 +69,7 @@ class FaqController extends MainController
 
         $dataProvider = new ActiveDataProvider([
             'query' => $faqQuery,
-            'sort' => ['defaultOrder' => ['sort_order'=>SORT_ASC]]
+            'sort' => ['defaultOrder' =>  ['sort_order'=>SORT_ASC, 'updated_at'=>SORT_ASC]]
         ]);
 
         $category = CmsFaqCategories::find($id)->one();
