@@ -58,12 +58,12 @@ class SearchCmsFaq extends CmsFaq
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
+        /*$query->andFilterWhere([
             'id' => $this->id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'sort_order' => $this->sort_order,
-        ]);
+        ]);*/
 
         $query->joinWith(['cmsFaqLangs' => function ($query) {
             $query->where(['language' => Yii::$app->language]);

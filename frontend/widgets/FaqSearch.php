@@ -12,9 +12,6 @@ class FaqSearch extends Widget
     public function init()
     {
         parent::init();
-        if (self::$items === null) {
-            self::$items = getItems;
-        }
     }
 
     public function run()
@@ -28,17 +25,10 @@ class FaqSearch extends Widget
         $model->addRule(['search_text'], 'string', ['max' => 128]);
         $model->addRule(['search_text'], 'required');
         
-        if ($model->load(Yii::$app->request->get()) && $model->validate()) {
-            // do what you want 
-        }
+        $model->load(Yii::$app->request->get());
         
         return $this->render('faqsearch/form', [
             'model' => $model
         ]);
-    }
-
-    static public function getItems() {
-        $searchModel = new SearchCmsFaq();
-        return $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
     }
 }
