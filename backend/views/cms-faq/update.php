@@ -15,8 +15,8 @@ $this->params['breadcrumbs'][] = Yii::t('backend', 'Update') . ' ' . $model->tit
     <h1><?= Html::encode($this->title) ?></h1>
     
     <p>
-        <?//= Html::a(Yii::t('backend', 'Preview'), ["preview", 'category_id' => $categoryModel->id, 'id' => $model->id], ['class' => 'btn btn-success', 'target'=>'_blank']) ?>
-        <?//= Html::a(Yii::t('backend', 'Preview'), ["../../" . Yii::$app->language ."/article/$categoryModel->id/" . ($model->identifier?$model->identifier:$model->id)], ['class' => 'btn btn-success', 'target'=>'_blank']) ?>
+        <?= Html::a(Yii::t('backend', 'Preview'), ["preview", 'category_id' => $categoryModel->id, 'id' => $model->id], ['class' => 'btn btn-success', 'target'=>'_blank']) ?>
+        <?//= Html::a(Yii::t('backend', 'Preview'), ["../../" . Yii::$app->language ."/faq/$categoryModel->id/" . ($model->identifier?$model->identifier:$model->id)], ['class' => 'btn btn-success', 'target'=>'_blank']) ?>
     </p>
     <p>
         <?php $frontend_url = Yii::$app->urlManagerFrontEnd->createAbsoluteUrl(['/article/' . $categoryModel->id . '/' . ($model->identifier?$model->identifier:$model->id)]);?>

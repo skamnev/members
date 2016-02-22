@@ -6,7 +6,7 @@ use yii\bootstrap\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['search'],
         'method' => 'get',
-    'layout' => 'horizontal',]); ?>
+    'layout' => 'inline',]); ?>
         <?= $form->field($model, "search_text")->textInput(['maxlength' => true]);?>
         <div class="form-group">
             <?= Html::submitButton(Yii::t('frontend', 'Search'), ['class' => 'btn btn-success']) ?>

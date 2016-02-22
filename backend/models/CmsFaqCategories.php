@@ -115,6 +115,14 @@ class CmsFaqCategories extends \yii\db\ActiveRecord
     {
         return $this->hasMany(CmsFaqCategoriesLang::className(), ['category_id' => 'id']);
     }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCmsFaqList($_id)
+    {
+        return CmsFaq::find()->where(['like', 'category_id',"[$_id]"]);
+    }
 
     public function getStatusLabel()
     {

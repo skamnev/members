@@ -24,9 +24,11 @@ class FaqSearch extends Widget
     
     public function getForm(){
         $model = new \yii\base\DynamicModel(['search_text']);
-        $model->addRule(['search_text'], 'string', ['max' => 128]);
         
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        $model->addRule(['search_text'], 'string', ['max' => 128]);
+        $model->addRule(['search_text'], 'required');
+        
+        if ($model->load(Yii::$app->request->get()) && $model->validate()) {
             // do what you want 
         }
         

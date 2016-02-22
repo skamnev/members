@@ -16,6 +16,7 @@ use frontend\components\MembersCodesComponent;
 use frontend\models\MembersAttributesAnswers;
 use frontend\models\MembersQuestionsAnswers;
 use frontend\models\CmsFaq;
+use frontend\models\SearchCmsFaq;
 
 /**
  * FaqController implements the CRUD actions for CmsFaq model.
@@ -63,36 +64,11 @@ class FaqController extends MainController
         /**
          * Define default member group code
          */
-
-        //get code id with max sum value
-        $memberGroupCode = MembersCodesComponent::getMemberGroupCode();
-        $memberAnswersCodes = MembersCodesComponent::getMemberCodesSqlFilter();
-
-        $pagesQuery = CmsFaq::find()->where(['is_active' => 1]);
-
-        //add default group to exclude codes array
-        if (!empty($memberGroupCode)) {
-            $memberAnswersCodes['exclude'][] = ['not like', 'no_code_id', "[$memberGroupCode]"];
-        }
-        //add conditions to the where instance if exclude codes array not empty
-        if (count($memberAnswersCodes['exclude'])>0) {
-            $pagesQuery->andWhere(array_merge(['and'],$memberAnswersCodes['exclude']))
-                ->orWhere(['no_code_id' => NULL]);
-        }
-        //add default group to include codes array
-        if (!empty($memberGroupCode)) {
-            $memberAnswersCodes['include'][] = ['like', 'code_id', "[$memberGroupCode]"];
-        }
-        //add conditions to the where instance if include codes array not empty
-        if (count($memberAnswersCodes['include'])>0) {
-            $pagesQuery->andWhere(array_merge(['or'],$memberAnswersCodes['include']))
-                ->orWhere(['code_id' => '']);
-        }
-
-        $pagesQuery->andWhere(['like', 'category_id',"[$id]"]);
+        $faqQuery = \backend\models\CmsFaq::find()->where(['is_active' => 1]);
+        $faqQuery->andWhere(['like', 'category_id',"[$id]"]);
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $pagesQuery,
+            'query' => $faqQuery,
             'sort' => ['defaultOrder' => ['sort_order'=>SORT_ASC]]
         ]);
 
@@ -114,9 +90,34 @@ class FaqController extends MainController
         $model = $this->findModel($id);
         $category = CmsFaqCategories::findOne(['id' => $category_id]);
 
-        return $this->render('view', [
+        return $this->render('search/view', [
             'model' => $model,
             'category' => $category
+        ]);
+    }
+    
+    public function actionPreview ($id, $category_id)
+    {
+        $model = $this->findModel($id);
+        $category = CmsFaqCategories::findOne(['id' => $category_id]);
+
+        $this->layout = 'preview';
+        return $this->render('@frontend/views/faq/view', [
+            'model' => $model,
+            'category' => $category
+        ]);
+    }
+    
+    public function actionSearch()
+    {
+        $searchParam = Yii::$app->request->get('DynamicModel')['search_text'];
+        $searchModel = new SearchCmsFaq();
+        
+        Yii::$app->request->queryParams['SearchCmsFaq'] = ['title' => $searchParam, 'content' => $searchParam];
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        return $this->render('search/index', [
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -129,16 +130,10 @@ class FaqController extends MainController
      */
     protected function findModel($id)
     {
-        if (($model = CmsFaq::find()->where(['is_active' => 1])->andFilterWhere(['or', ['id' => $id],[ 'identifier' => $id]])->one()) !== null) {
+        if (($model = \backend\models\CmsFaq::find()->where(['is_active' => 1])->andFilterWhere(['or', ['id' => $id],[ 'identifier' => $id]])->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-    
-    public function actionSearch()
-    {
-        $searchModel = new \frontend\models\SearchCmsFaq();
-        return $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
     }
 }

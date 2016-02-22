@@ -47,6 +47,7 @@ AppAsset::register($this);
             ['label' => Yii::t('frontend', 'PDFs'), 'url' => ['/members/pdfs']],
             ['label' => Yii::t('frontend', 'Recipes'), 'url' => ['/recipes/categories']],
             ['label' => Yii::t('frontend', 'Articles'), 'url' => ['/articles/categories']],
+            ['label' => Yii::t('frontend', 'FAQ'), 'url' => ['/faq/categories']],
             //['label' => Yii::t('frontend', 'Contact'), 'url' => ['/site/contact']],
         ];
     }

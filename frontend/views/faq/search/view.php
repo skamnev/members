@@ -7,11 +7,11 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\CmsFaq */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('frontend', 'FAQ Categories'), 'url' => ['faq/categories']];
-$this->params['breadcrumbs'][] = ['label' => $category->title, 'url' => ['faq/category/' . $category->id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('frontend', 'Articles Categories'), 'url' => ['articles/categories']];
+$this->params['breadcrumbs'][] = ['label' => $category->title, 'url' => ['articles/category/' . $category->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="cms-faq-view">
+<div class="cms-pages-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

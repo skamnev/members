@@ -60,7 +60,7 @@ class CmsFaqController extends Controller
         $category = CmsFaqCategories::findOne(['id' => $category_id]);
 
         $this->layout = 'preview';
-        return $this->render('@frontend/views/articles/view', [
+        return $this->render('@frontend/views/faq/view', [
             'model' => $model,
             'category' => $category
         ]);

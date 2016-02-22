@@ -14,6 +14,8 @@ $this->params['breadcrumbs'][] = $category->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <?php echo \frontend\widgets\FaqSearch::widget();?>
+    
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
         'itemView' => '_item',

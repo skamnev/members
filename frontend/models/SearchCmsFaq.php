@@ -41,7 +41,9 @@ class SearchCmsFaq extends CmsFaq
      */
     public function search($params)
     {
-        $query = CmsFaq::find();
+        $query = CmsFaq::find()->where(['is_active' => 1])
+            ->andFilterWhere(['like', 'cms_faq_lang.title', $this->title])
+            ->orFilterWhere(['like', 'cms_faq_lang.content', $this->content]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -62,11 +64,6 @@ class SearchCmsFaq extends CmsFaq
             'updated_at' => $this->updated_at,
             'sort_order' => $this->sort_order,
         ]);
-
-        $query//->andFilterWhere(['like', 'cms_faq.title', $this->title])
-            ->andFilterWhere(['like', 'cms_faq_lang.title', $this->title])
-            ->andFilterWhere(['like', 'content', $this->content])
-            ->andFilterWhere(['like', 'category_id', $this->category_id]);
 
         $query->joinWith(['cmsFaqLangs' => function ($query) {
             $query->where(['language' => Yii::$app->language]);
