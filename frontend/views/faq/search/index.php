@@ -9,7 +9,7 @@ use frontend\widgets\FaqSearch;
 
 $this->title = Yii::t('frontend', 'Search');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('frontend', 'FAQ'), 'url' => ['faq/categories']];
-$this->params['breadcrumbs'][] = $category->title;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cms-faq-index">
 
@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $category->title;
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
         'itemView' => '_item',
-        'viewParams' => ['category' => $category],
+        //'viewParams' => ['category' => $category],
         'options' => [
             'tag' => 'div',
             'class' => 'list-wrapper',

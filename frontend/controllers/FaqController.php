@@ -111,10 +111,19 @@ class FaqController extends MainController
     public function actionSearch()
     {
         $searchParam = Yii::$app->request->get('DynamicModel')['search_text'];
-        $searchModel = new SearchCmsFaq();
         
-        Yii::$app->request->queryParams['SearchCmsFaq'] = ['title' => $searchParam, 'content' => $searchParam];
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $faqQuery = \backend\models\CmsFaq::find()->where(['is_active' => 1])
+            ->andFilterWhere(['like', 'cms_faq_lang.title', $searchParam])
+            ->orFilterWhere(['like', 'cms_faq_lang.content', $searchParam]);
+
+        $faqQuery->joinWith(['cmsFaqLangs' => function ($query) {
+            $query->where(['language' => Yii::$app->language]);
+        }]);
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $faqQuery,
+            'sort' => ['defaultOrder' => ['sort_order'=>SORT_ASC, 'updated_at'=>SORT_ASC]]
+        ]);
         
         return $this->render('search/index', [
             'dataProvider' => $dataProvider,
