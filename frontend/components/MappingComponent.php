@@ -267,11 +267,11 @@ class MappingComponent extends Component
 
     }
     
-    public function getCategoryProgressDate($categoryId)
+    public function getCategoryProgressDate($categoryId, $memberId)
     {
         if (!Yii::$app->user->isGuest) {
             /* initiate members progress data and save to database */
-            $memberProgress = MembersProgress::find()->where(['category_id' => $categoryId, 'member_id' => Yii::$app->user->id])->one();
+            $memberProgress = MembersProgress::find()->where(['category_id' => $categoryId, 'member_id' => $memberId])->one();
             $memberProgressTime = 0;
             
             //if member progress does not exist

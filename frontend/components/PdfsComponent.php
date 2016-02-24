@@ -21,7 +21,7 @@ class PdfsComponent extends Component {
         $pdfs = Pdfs::find()->where(['is_active' => 1])->orderBy('order, name');
 
         foreach ($pdfs->all() as $_pdf) {
-            $pdf_rules_match_count = $this->getPdfRule($member->id, $_pdf);
+            $pdf_rules_match_count = $this->getPdfRule($member, $_pdf);
             if ($pdf_rules_match_count) {
                 $this->pdfs[] = $_pdf;
             }
@@ -41,15 +41,22 @@ class PdfsComponent extends Component {
         return false;
     }
     
-    private function getPdfRule($memberId, $pdf) {
+    private function getPdfRule($member, $pdf) {
         $pdf_rules = PdfsRules::find()->where(['is_active' => 1, 'pdf_id' => $pdf->id]);
         $pdfsDelay = Yii::$app->PdfsComponent->getPdfDelaySettings() * 3600;
         
+        $progressUpdateTime = strtotime($member->created_at);
+        $diffTime = time() - $progressUpdateTime;
+
+        if ($diffTime < $pdfsDelay) {
+            return false;
+        }
+
         if ($pdf_rules->count() > 0) {
-            $memberAnswers = MembersQuestionsAnswers::find()->where(['member_id' => $memberId]);
+            $memberAnswers = MembersQuestionsAnswers::find()->where(['member_id' => $member->id]);
 
             foreach($pdf_rules->all() as $rule) {
-                $progressUpdateTime = strtotime(Yii::$app->MappingComponent->getCategoryProgressDate($rule->category_id));
+                $progressUpdateTime = strtotime(Yii::$app->MappingComponent->getCategoryProgressDate($rule->category_id, $member->id));
                 $diffTime = time() - $progressUpdateTime;
                 
                 if ($diffTime < $pdfsDelay) {
@@ -60,18 +67,7 @@ class PdfsComponent extends Component {
             }
 
             return $memberAnswers->count();
-        } else {
-            $progressUpdateTime = strtotime(Yii::$app->user->identity->created_at);
-            $diffTime = time() - $progressUpdateTime;
-
-            if ($diffTime < $pdfsDelay) {
-                return false;
-            } else {
-                return true;
-            }
         }
-            
-        
     }
     
     public function getPdfDelaySettings() {
