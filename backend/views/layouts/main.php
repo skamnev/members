@@ -57,8 +57,9 @@ AppAsset::register($this);
                 ['label' => Yii::t('backend','Recipes'), 'url' => ['/cms-recipes-categories/index']],
                 ['label' => Yii::t('backend','FAQ'), 'url' => ['/cms-faq-categories/index']],
             ]],
-        ['label' => Yii::t('backend', 'General Settings'),
+        ['label' => Yii::t('backend', 'Settings'),
             'items' => [
+                ['label' => Yii::t('backend','General'), 'url' => ['/general-settings/index']],
                 ['label' => Yii::t('backend','Languages'), 'url' => ['/lang/index']],
                 ['label' => Yii::t('backend','Fields Types'), 'url' => ['/fields-types/index']],
                 ['label' => Yii::t('backend','Weight Tracker'), 'url' => ['/general-settings/weight-tracker']],

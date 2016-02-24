@@ -47,14 +47,12 @@ class GeneralSettingsController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->getSession()->setFlash('success', 'Successfully saved.');
-            return $this->redirect(['weight-tracker']);
+            return $this->redirect(['weight_tracker/weight-tracker']);
         } else {
-            return $this->render('weight-tracker', [
+            return $this->render('weight_tracker/weight-tracker', [
                 'model' => $model,
             ]);
         }
-
-
     }
 
     /**
@@ -66,9 +64,9 @@ class GeneralSettingsController extends Controller
         $model = $this->findModel(['name' => 'mapping_page_id']);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['mapping-page']);
+            return $this->redirect(['mapping/mapping-page']);
         } else {
-            return $this->render('mapping-page', [
+            return $this->render('mapping/mapping-page', [
                 'model' => $model,
             ]);
         }
@@ -82,12 +80,16 @@ class GeneralSettingsController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => GeneralSettings::find(),
-        ]);
+        $model = $this->findModel(['name' => 'pdfs_availability_delay']);
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', 'Successfully saved.');
+            //return $this->redirect(['general-settings/index']);
+        } else {
+        }
+        
+        return $this->render('general/index', [
+            'model' => $model,
         ]);
     }
 

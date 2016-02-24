@@ -12,9 +12,10 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'value')->textInput()->label('PDFs Availability Delay (hrs)') ?>
 
-    <?= $form->field($model, 'value')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'id')->hiddenInput()->label(false); ?>
+
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

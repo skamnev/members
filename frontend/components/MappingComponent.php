@@ -266,4 +266,22 @@ class MappingComponent extends Component
     public function currentStep() {
 
     }
+    
+    public function getCategoryProgressDate($categoryId)
+    {
+        if (!Yii::$app->user->isGuest) {
+            /* initiate members progress data and save to database */
+            $memberProgress = MembersProgress::find()->where(['category_id' => $categoryId, 'member_id' => Yii::$app->user->id])->one();
+            $memberProgressTime = 0;
+            
+            //if member progress does not exist
+            if (!empty($memberProgress)) {
+                $memberProgressTime = $memberProgress->updated_at;
+            }
+            
+            return $memberProgressTime;
+        }
+        
+        return false;
+    }
 }

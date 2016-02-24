@@ -7,6 +7,7 @@ use backend\models\PdfsRules;
 use frontend\models\MembersQuestionsAnswers;
 use Yii;
 use yii\base\Component;
+use backend\models\GeneralSettings;
 
 /**
  * This component will do:
@@ -20,7 +21,7 @@ class PdfsComponent extends Component {
         $pdfs = Pdfs::find()->where(['is_active' => 1])->orderBy('order, name');
 
         foreach ($pdfs->all() as $_pdf) {
-            $pdf_rules_match_count = $this->getPdfRule($member->id, $_pdf->id);
+            $pdf_rules_match_count = $this->getPdfRule($member->id, $_pdf);
             if ($pdf_rules_match_count) {
                 $this->pdfs[] = $_pdf;
             }
@@ -32,7 +33,7 @@ class PdfsComponent extends Component {
     public function getAvailablePdfById($member, $pdfId) {
         $pdf = Pdfs::findOne(['is_active' => 1, 'id' => $pdfId]);
         
-        $pdf_rules_match_count = $this->getPdfRule($member->id, $pdfId);
+        $pdf_rules_match_count = $this->getPdfRule($member->id, $pdf);
         if ($pdf_rules_match_count) {
             return $pdf;
         }
@@ -40,15 +41,42 @@ class PdfsComponent extends Component {
         return false;
     }
     
-    private function getPdfRule($memberId, $pdfId) {
-        $pdf_rules = PdfsRules::find()->where(['is_active' => 1, 'pdf_id' => $pdfId]);
+    private function getPdfRule($memberId, $pdf) {
+        $pdf_rules = PdfsRules::find()->where(['is_active' => 1, 'pdf_id' => $pdf->id]);
+        $pdfsDelay = Yii::$app->PdfsComponent->getPdfDelaySettings() * 3600;
+        
+        if ($pdf_rules->count() > 0) {
+            $memberAnswers = MembersQuestionsAnswers::find()->where(['member_id' => $memberId]);
 
-        $memberAnswers = MembersQuestionsAnswers::find()->where(['member_id' => $memberId]);
+            foreach($pdf_rules->all() as $rule) {
+                $progressUpdateTime = strtotime(Yii::$app->MappingComponent->getCategoryProgressDate($rule->category_id));
+                $diffTime = time() - $progressUpdateTime;
+                
+                if ($diffTime < $pdfsDelay) {
+                    return false;
+                }
 
-        foreach($pdf_rules->all() as $rule) {
-            $memberAnswers->andWhere(['in', 'option_id', $rule->options_id]);
+                $memberAnswers->andWhere(['in', 'option_id', $rule->options_id]);
+            }
+
+            return $memberAnswers->count();
+        } else {
+            $progressUpdateTime = strtotime(Yii::$app->user->identity->created_at);
+            $diffTime = time() - $progressUpdateTime;
+
+            if ($diffTime < $pdfsDelay) {
+                return false;
+            } else {
+                return true;
+            }
         }
-
-        return $memberAnswers->count();
+            
+        
+    }
+    
+    public function getPdfDelaySettings() {
+        $settingsModel = GeneralSettings::findOne(['name' => 'pdfs_availability_delay']);
+        
+        return $settingsModel->value;
     }
 }
