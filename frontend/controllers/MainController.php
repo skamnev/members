@@ -13,9 +13,9 @@ class MainController extends Controller {
     public function beforeAction($event)
     {
         $this->processPostToSession();
-        $this->checkRoute($event);
 
         if (!Yii::$app->user->isGuest) {
+            $this->checkRoute($event);
             $this->checkUser($event);
             $this->checkMapping($event);
         }
@@ -27,6 +27,7 @@ class MainController extends Controller {
         $postEmail = Yii::$app->request->post('email');
         $postPlanId = Yii::$app->request->post('plan_id');
         $postConversionId = Yii::$app->request->post('conversion_id');
+        $postGoogleConversionLabel = Yii::$app->request->post('google_conversion_label');
 
         if (!empty($postEmail)) {
             Yii::$app->session->set('new_member_email', $postEmail);
@@ -38,6 +39,7 @@ class MainController extends Controller {
 
         if (!empty($postConversionId)) {
             Yii::$app->session->set('payment_conversion_id', $postConversionId);
+            Yii::$app->session->set('payment_google_conversion_label', $postGoogleConversionLabel);
         }
     }
 
