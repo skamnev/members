@@ -75,10 +75,12 @@ class CmsRecipesController extends Controller
         $model = new CmsRecipes();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', 'Successfully saved.');
             if ($category_id) {
-                return $this->redirect(['cms-recipes-categories/view', 'category_id' => $category_id]);
+                return $this->redirect(['cms-recipes/update', 'id' => $model->id, 'category_id' => $category_id ]);
             } else {
-                return $this->redirect(['cms-recipes-categories/index']);
+                $category_id = preg_split('/[\[\],]/i', $model->category_id, -1, PREG_SPLIT_NO_EMPTY)[0];
+                return $this->redirect(['cms-recipes/update', 'id' => $model->id, 'category_id' => $category_id ]);
             }
         } else {
             $languages = Lang::find()->all();
@@ -109,20 +111,20 @@ class CmsRecipesController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['cms-recipes-categories/view', 'category_id' => $category_id]);
-        } else {
-            $languages = Lang::find()->all();
-            $languageDefault = Lang::findOne(['default' => 1]);
-
-            $categoryModel = CmsRecipesCategories::findOne($category_id);
-
-            return $this->render('update', [
-                'model' => $model,
-                'languages' => $languages,
-                'languageDefault' => $languageDefault,
-                'categoryModel' => $categoryModel,
-            ]);
+            Yii::$app->getSession()->setFlash('success', 'Successfully updated.');
         }
+        
+        $languages = Lang::find()->all();
+        $languageDefault = Lang::findOne(['default' => 1]);
+
+        $categoryModel = CmsRecipesCategories::findOne($category_id);
+
+        return $this->render('update', [
+            'model' => $model,
+            'languages' => $languages,
+            'languageDefault' => $languageDefault,
+            'categoryModel' => $categoryModel,
+        ]);
     }
 
     /**

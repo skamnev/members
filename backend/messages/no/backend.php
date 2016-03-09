@@ -136,7 +136,7 @@ return [
     'Select Codes' => 'Velg koder',
     'Select Page' => 'Velg side',
     'Set Mapping Page' => 'Velg side for kartlegging',
-    'Sort Order' => '',
+    'Sort Order' => 'Rekkefølge',
     'Status' => 'Status',
     'Status Active' => '',
     'Title' => 'Tittel',

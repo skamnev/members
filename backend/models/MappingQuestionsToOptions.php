@@ -95,7 +95,7 @@ class MappingQuestionsToOptions extends \yii\db\ActiveRecord
             'code_id' => Yii::t('backend', 'Code IDs'),
             'title' => Yii::t('backend', 'Title'),
             //'lang_id' => Yii::t('backend', 'Lang ID'),
-            'order' => Yii::t('backend', 'Order'),
+            'order' => Yii::t('backend', 'Sort Order'),
             'created_at' => Yii::t('backend', 'Created At'),
             'updated_at' => Yii::t('backend', 'Updated At'),
         ];

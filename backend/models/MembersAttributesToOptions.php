@@ -90,7 +90,7 @@ class MembersAttributesToOptions extends \yii\db\ActiveRecord
             'id' => Yii::t('backend', 'ID'),
             'attribute_id' => Yii::t('backend', 'Attribute ID'),
             'title' => Yii::t('backend', 'Title'),
-            'order' => Yii::t('backend', 'Order'),
+            'order' => Yii::t('backend', 'Sort Order'),
             'created_at' => Yii::t('backend', 'Created At'),
             'updated_at' => Yii::t('backend', 'Updated At'),
         ];

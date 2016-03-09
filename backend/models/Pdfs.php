@@ -109,7 +109,7 @@ class Pdfs extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('cms', 'ID'),
             'name' => Yii::t('cms', 'Name'),
-            'order' => Yii::t('cms', 'Order'),
+            'order' => Yii::t('cms', 'Sort Order'),
             'file' => Yii::t('cms', 'File'),
             'is_active' => Yii::t('cms', 'Is Active'),
             'created_at' => Yii::t('cms', 'Created At'),

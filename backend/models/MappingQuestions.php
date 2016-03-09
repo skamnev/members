@@ -99,7 +99,7 @@ class MappingQuestions extends \yii\db\ActiveRecord
             'is_required'=> Yii::t('backend', 'Required'),
             'has_other'=> Yii::t('backend', 'Has Other'),
             'type_id' => Yii::t('backend', 'Type'),
-            'order' => Yii::t('backend', 'Order'),
+            'order' => Yii::t('backend', 'Sort Order'),
         ];
     }
 

@@ -75,10 +75,12 @@ class CmsPagesController extends Controller
         $model = new CmsPages();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', 'Successfully saved.');
             if ($category_id) {
-                return $this->redirect(['cms-pages-categories/view', 'category_id' => $category_id]);
+                return $this->redirect(['cms-pages/update', 'id' => $model->id, 'category_id' => $category_id ]);
             } else {
-                return $this->redirect(['cms-pages-categories/index']);
+                $category_id = preg_split('/[\[\],]/i', $model->category_id, -1, PREG_SPLIT_NO_EMPTY)[0];
+                return $this->redirect(['cms-pages/update', 'id' => $model->id, 'category_id' => $category_id ]);
             }
         } else {
             $languages = Lang::find()->all();
@@ -110,18 +112,18 @@ class CmsPagesController extends Controller
         $categoryModel = CmsPagesCategories::findOne($category_id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['cms-pages-categories/view', 'category_id' => $category_id]);
-        } else {
-            $languages = Lang::find()->all();
-            $languageDefault = Lang::findOne(['default' => 1]);
-
-            return $this->render('update', [
-                'model' => $model,
-                'languages' => $languages,
-                'languageDefault' => $languageDefault,
-                'categoryModel' => $categoryModel,
-            ]);
+            Yii::$app->getSession()->setFlash('success', 'Successfully updated.');
         }
+         
+        $languages = Lang::find()->all();
+        $languageDefault = Lang::findOne(['default' => 1]);
+
+        return $this->render('update', [
+            'model' => $model,
+            'languages' => $languages,
+            'languageDefault' => $languageDefault,
+            'categoryModel' => $categoryModel,
+        ]);
     }
 
     /**
