@@ -11,6 +11,11 @@ use dosamigos\datepicker\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model backend\models\CmsFaq */
 /* @var $form yii\widgets\ActiveForm */
+
+$this->registerJsFile(Yii::getAlias('@web/js/redactor.emotions.js'), ['depends' => [
+    'yii\web\YiiAsset'],
+]);
+$this->registerCssFile(Yii::getAlias('@web/css/redactor.emotions.css'));
 ?>
 
 <div class="cms-faq-form">
@@ -25,7 +30,7 @@ use dosamigos\datepicker\DatePicker;
         'imageUpload' => ['/redactor/upload/image'],
         'fileUpload' => ['/redactor/upload/file'],
         'lang' => Yii::$app->language,
-        'plugins' => ['clips', 'fontcolor','imagemanager']
+        'plugins' => ['fontcolor','imagemanager', 'emotions']
     ];
 
     foreach($languages as $key => $language) {
