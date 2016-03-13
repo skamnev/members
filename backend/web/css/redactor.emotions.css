@@ -1,20 +1,18 @@
-@font-face {
-  font-family: emoji;
+#redactor-modal #redactor-modal-list.redactor-emojione-list ul :after {
+    clear: both;
+}
 
-  src: url('font/Symbola-Emoji.eot?#iefix') format('embedded-opentype'),
-       url('font/Symbola-Emoji.woff') format('woff'),
-       url('font/Symbola-Emoji.ttf') format('truetype');
-
-  /* Emoji unicode blocks */
-  unicode-range: U+1F300-1F5FF, U+1F600-1F64F, U+1F680-1F6FF, U+2600-26FF;
+#redactor-modal #redactor-modal-list.redactor-emojione-list li {
+    float: left;
+    border-bottom: none;
 }
 
 .re-emotions {
-    font-family: emoji;
+    font-family: Symbola;
 }
 
 .re-emotions:before {
-    content: "\263a";
+    content: "\1f600";
 }
 
 .label-red {

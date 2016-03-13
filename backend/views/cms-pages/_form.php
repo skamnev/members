@@ -15,9 +15,12 @@ use dosamigos\datepicker\DatePicker;
 $this->registerJsFile(Yii::getAlias('@web/js/redactor.emotions.js'), ['depends' => [
     'yii\web\YiiAsset'],
 ]);
+$this->registerJsFile(Yii::getAlias('@web/js/emojione.min.js'), ['depends' => [
+    'yii\web\YiiAsset'],
+]);
 $this->registerCssFile(Yii::getAlias('@web/css/redactor.emotions.css'));
+$this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
 ?>
-
 <div class="cms-pages-form">
     <p>
         <?= Html::img($model->getThumbFileUrl('main_img', 'thumb')) ?>
