@@ -68,8 +68,8 @@ use kartik\file\FileInput;
     ?>
     
     <?= $form->field($model, 'external_url')->textInput(['maxlength' => true]); ?>
-    
-    <?php if (!$model->isNewRecord && (file_exists($model->getUploadedFilePath('file')) || $model->external_url)): ?>
+    <?php $localFileExists = file_exists($model->getUploadedFilePath('file'));?>
+    <?php if (!$model->isNewRecord && ($localFileExists || $model->external_url)): ?>
     <?php
         $video_url = $model->external_url;
         $internalVideo = $model->getUploadedFileUrl('file');
@@ -108,9 +108,11 @@ use kartik\file\FileInput;
         </div>
     </div>
     <br/>
+    <?php if ($localFileExists): ?>
     <?= Html::a(Yii::t('backend', 'Delete'), ['videos/delete-video?id=' . $model->id], ['class' => 'btn btn-danger']) ?>
     <?= Html::a($model->file, $model->getUploadedFileUrl('file'), array('target' => '_blank')) ?>
     <br/><br/>
+    <?php endif;?>
     <?php endif;?>
     
     <?= $form->field($model, 'status')->checkbox(['label' => Yii::t('backend','Active')]); ?>
