@@ -90,8 +90,9 @@ class Videos extends \yii\db\ActiveRecord
         $rules_general = [
             [['id', 'status'], 'integer'],
             [['description'], 'string'],
-            [['created_at', 'updated_at'], 'safe'],
-            ['file', 'file', 'extensions' => ['pdf', 'mp4'], 'maxSize' => 1024 * 1024 * 300],
+            [['created_at', 'updated_at', 'file'], 'safe'],
+            //['file', 'file', 'extensions' => ['pdf', 'mp4'], 'maxSize' => 1024 * 1024 * 300, 'skipOnEmpty' => true],
+            //['file', 'default', 'value' => null],
             [['title'], 'string', 'max' => 255],
             // Url адрес
             ['external_url', 'unique', 'attributes'=>'url'],

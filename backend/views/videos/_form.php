@@ -2,11 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use backend\models\MappingQuestionsCodes;
 use yii\bootstrap\Tabs;
 use kartik\file\FileInput;
-use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Videos */
@@ -72,10 +69,11 @@ use dosamigos\datepicker\DatePicker;
     
     <?= $form->field($model, 'external_url')->textInput(['maxlength' => true]); ?>
     
-    <?php if (!$model->isNewRecord ): ?>
+    <?php if (!$model->isNewRecord && (file_exists($model->getUploadedFilePath('file')) || $model->external_url)): ?>
     <?php
         $video_url = $model->external_url;
         $internalVideo = $model->getUploadedFileUrl('file');
+        
         if ($internalVideo) {
             $video_url = $internalVideo;
         }
@@ -110,6 +108,7 @@ use dosamigos\datepicker\DatePicker;
         </div>
     </div>
     <br/>
+    <?= Html::a(Yii::t('backend', 'Delete'), ['videos/delete-video?id=' . $model->id], ['class' => 'btn btn-danger']) ?>
     <?= Html::a($model->file, $model->getUploadedFileUrl('file'), array('target' => '_blank')) ?>
     <br/><br/>
     <?php endif;?>

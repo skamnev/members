@@ -116,6 +116,21 @@ class VideosController extends Controller
     }
 
     /**
+     * Deletes an existing Videos file.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDeleteVideo($id)
+    {
+        $model = $this->findModel($id);
+        
+        $model->cleanFiles();
+        
+        return $this->redirect(['update', 'id' => $model->id]);
+    }
+    
+    /**
      * Deletes an existing Videos model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
