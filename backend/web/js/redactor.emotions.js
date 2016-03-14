@@ -60,6 +60,7 @@ RedactorPlugins.emotions = function () {
             $(".redactor-editor").each(function() {
                 var original = $(this).html();
                 // use .shortnameToImage if only converting shortnames (for slightly better performance)
+                emojione.unicodeAlt = false;
                 var converted = emojione.toImage(original);
                 $(this).html(converted);
             });

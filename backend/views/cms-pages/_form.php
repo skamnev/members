@@ -131,6 +131,50 @@ $this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
     <?php ActiveForm::end(); ?>
 
 </div>
+<?php 
+$js = <<<JS
+ImageToShortname = function(str) {
+    var finalString = str,
+    url,
+    urlRegex =  /<img.*?src="([^">]*\/([^">]*?))".*?>/g,
+    imgRegex = /<img.*?.*?>/;
+
+    while ( url = urlRegex.exec( str ) ) {
+        var urlString = url[1],
+        currentShortname = "";
+            urlString = urlString.substr(urlString.lastIndexOf('/') + 1).split('.')[0];
+            
+            for (var shortname in emojione.emojioneList) {
+                if (emojione.emojioneList[shortname].indexOf(urlString.toLowerCase()) != -1) {
+                    currentShortname = shortname;
+                }
+            }
+            finalString = finalString.replace(imgRegex, currentShortname);
+    }
+    return finalString;
+}
+        
+$('body').on('beforeSubmit', 'form#{$form->getId()}', function () {
+ 
+    var form = $(this);
+
+    /*$(".redactor-editor").each(function() {
+        var newHtml = ImageToShortname($(this).html());
+        $(this).html(newHtml);
+        $(this).next('textarea').html(newHtml);
+    });*/
+
+    if (form.find('.has-error').length) {
+        return false;
+    }
+form.submit();
+    return false; // form does not get submitted
+ 
+});
+JS;
+ 
+//$this->registerJs($js);
+?>
 <?php /*
 $this->registerJs("
 

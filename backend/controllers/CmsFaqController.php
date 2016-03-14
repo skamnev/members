@@ -114,6 +114,7 @@ class CmsFaqController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->getSession()->setFlash('success', 'Successfully updated.');
+            return $this->redirect(['cms-faq/update', 'id' => $model->id, 'category_id' => $category_id ]);
         }
         
         $languages = Lang::find()->all();
