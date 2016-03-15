@@ -6,7 +6,13 @@ RedactorPlugins.emotions = function () {
             var items = [
                 [':grinning:', ':grinning:'],
                 [':slight_smile:', ':slight_smile:'],
-                [':hearts:', ':hearts:']
+                [':yum:', ':yum:'],
+                [':heart_eyes:', ':heart_eyes:'],
+                [':hearts:', ':hearts:'],
+                [':blue_heart:', ':blue_heart:'],
+                [':yellow_heart:', ':yellow_heart:'],
+                [':green_heart:', ':green_heart:'],
+                [':purple_heart:', ':purple_heart:']
             ];
 
             this.emotions.template = $('<ul id="redactor-modal-list" class="redactor-emojione-list">');
@@ -33,38 +39,31 @@ RedactorPlugins.emotions = function () {
             this.modal.createCancelButton();
 
             $('#redactor-modal-list').find('.redactor-emojione-link').each($.proxy(this.emotions.load, this));
-
-            var output = emojione.shortnameToImage(':grinning:');
-            $('.testemoji').innerHTML = output;
             
             this.selection.save();
             this.modal.show();
         },
         load: function (i, s) {
-            $(s).on('click', $.proxy(function (e) {
-                e.preventDefault();
-                this.emotions.insert($(s).next().html());
-
-            }, this));
-            
             $(".redactor-emojione-link").each(function() {
                 var original = $(this).html();
                 // use .shortnameToImage if only converting shortnames (for slightly better performance)
                 var converted = emojione.toImage(original);
                 $(this).html(converted);
             });
+            
+            $(s).on('click', $.proxy(function (e) {
+                e.preventDefault();
+                this.emotions.insert($(s).next().html());
+
+            }, this));
         },
         insert: function (html) {
             this.selection.restore();
-            this.insert.html(html);
-           
-            $(".redactor-editor").each(function() {
-                var original = $(this).html();
-                // use .shortnameToImage if only converting shortnames (for slightly better performance)
-                emojione.unicodeAlt = false;
-                var converted = emojione.toImage(original);
-                $(this).html(converted);
-            });
+            
+            emojione.unicodeAlt = false;
+            var html = emojione.toImage(html);
+
+            this.insert.htmlWithoutClean(html);
             
             this.modal.close();
             this.observe.load();

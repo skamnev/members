@@ -15,7 +15,7 @@ use dosamigos\datepicker\DatePicker;
 $this->registerJsFile(Yii::getAlias('@web/js/redactor.emotions.js'), ['depends' => [
     'yii\web\YiiAsset'],
 ]);
-$this->registerJsFile(Yii::getAlias('@web/js/emojione.min.js'), ['depends' => [
+$this->registerJsFile(Yii::getAlias('@web/js/emojione.js'), ['depends' => [
     'yii\web\YiiAsset'],
 ]);
 $this->registerCssFile(Yii::getAlias('@web/css/redactor.emotions.css'));

@@ -107,6 +107,13 @@ $this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
         $model->publish_date = date('d.m.Y', strtotime($model->publish_date));
     }
     ?>
+    <?php
+    //datapicker language issue;
+    $language = Yii::$app->language;
+    if ($language == 'en') {
+        $language = 'en-GB';
+    }
+    ?>
     <?= $form->field($model, 'publish_date')->widget(\yii\widgets\MaskedInput::className(), [
         'clientOptions' => ['alias' =>  'dd.mm.yyyy'],
     ])//->hint(Yii::t('frontend', 'Example') . ': 03.11.1981')
@@ -118,7 +125,7 @@ $this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
             'format' => 'dd.mm.yyyy',
             'minView' => 1,
         ],
-        'language' => Yii::$app->language,
+        'language' => $language,
     ]);
     ?>
 
@@ -173,11 +180,11 @@ form.submit();
 });
 JS;*/
 $js = 'jQuery(document).ready(function(){
-            emojione.imagePathPNG = "' . Yii::getAlias('@web/images/emoji/apple/') 
+            emojione.imagePathPNG = "' . Yii::$app->urlManagerFrontEnd->getBaseUrl() . '/images/emoji/apple/'
     . '"});' ;
 
 
-$this->registerJs($js);
+$this->registerJs($js, yii\web\View::POS_READY);
 ?>
 <?php /*
 $this->registerJs("

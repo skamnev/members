@@ -15,7 +15,7 @@ use dosamigos\datepicker\DatePicker;
 $this->registerJsFile(Yii::getAlias('@web/js/redactor.emotions.js'), ['depends' => [
     'yii\web\YiiAsset'],
 ]);
-$this->registerJsFile(Yii::getAlias('@web/js/emojione.min.js'), ['depends' => [
+$this->registerJsFile(Yii::getAlias('@web/js/emojione.js'), ['depends' => [
     'yii\web\YiiAsset'],
 ]);
 $this->registerCssFile(Yii::getAlias('@web/css/redactor.emotions.css'));
@@ -106,6 +106,13 @@ $this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
         $model->publish_date = date('d.m.Y', strtotime($model->publish_date));
     }
     ?>
+    <?php
+    //datapicker language issue;
+    $language = Yii::$app->language;
+    if ($language == 'en') {
+        $language = 'en-GB';
+    }
+    ?>
     <?= $form->field($model, 'publish_date')->widget(\yii\widgets\MaskedInput::className(), [
         'clientOptions' => ['alias' =>  'dd.mm.yyyy'],
     ])//->hint(Yii::t('frontend', 'Example') . ': 03.11.1981')
@@ -117,7 +124,7 @@ $this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
             'format' => 'dd.mm.yyyy',
             'minView' => 1,
         ],
-        'language' => Yii::$app->language,
+        'language' => $language,
     ]);
     ?>
 
