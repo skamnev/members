@@ -15,7 +15,7 @@ use dosamigos\datepicker\DatePicker;
 $this->registerJsFile(Yii::getAlias('@web/js/redactor.emotions.js'), ['depends' => [
     'yii\web\YiiAsset'],
 ]);
-$this->registerJsFile(Yii::getAlias('@web/js/emojione.min.js'), ['depends' => [
+$this->registerJsFile(Yii::getAlias('@web/js/emojione.js'), ['depends' => [
     'yii\web\YiiAsset'],
 ]);
 $this->registerCssFile(Yii::getAlias('@web/css/redactor.emotions.css'));
@@ -132,7 +132,7 @@ $this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
 
 </div>
 <?php 
-$js = <<<JS
+$js = /*<<<JS
 ImageToShortname = function(str) {
     var finalString = str,
     url,
@@ -158,11 +158,11 @@ $('body').on('beforeSubmit', 'form#{$form->getId()}', function () {
  
     var form = $(this);
 
-    /*$(".redactor-editor").each(function() {
-        var newHtml = ImageToShortname($(this).html());
-        $(this).html(newHtml);
-        $(this).next('textarea').html(newHtml);
-    });*/
+    //$(".redactor-editor").each(function() {
+    //    var newHtml = ImageToShortname($(this).html());
+    //    $(this).html(newHtml);
+    //    $(this).next('textarea').html(newHtml);
+    //});
 
     if (form.find('.has-error').length) {
         return false;
@@ -171,9 +171,13 @@ form.submit();
     return false; // form does not get submitted
  
 });
-JS;
- 
-//$this->registerJs($js);
+JS;*/
+$js = 'jQuery(document).ready(function(){
+            emojione.imagePathPNG = "' . Yii::getAlias('@web/images/emoji/apple/') 
+    . '"});' ;
+
+
+$this->registerJs($js);
 ?>
 <?php /*
 $this->registerJs("

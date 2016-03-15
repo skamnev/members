@@ -5,7 +5,8 @@ RedactorPlugins.emotions = function () {
         init: function () {
             var items = [
                 [':grinning:', ':grinning:'],
-                [':slight_smile:', ':slight_smile:']
+                [':slight_smile:', ':slight_smile:'],
+                [':hearts:', ':hearts:']
             ];
 
             this.emotions.template = $('<ul id="redactor-modal-list" class="redactor-emojione-list">');

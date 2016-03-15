@@ -252,7 +252,7 @@
                         replaceWith = '<span class="emojione-'+unicode+'" title="'+shortname+'">'+alt+'</span>';
                     }
                     else {
-                        replaceWith = '<img class="emojione" alt="'+alt+'" src="'+ns.imagePathPNG+unicode+'.png'+ns.cacheBustParam+'"/>';
+                        replaceWith = '<img class="emojione" width="20" alt="'+alt+'" src="'+ns.imagePathPNG+unicode+'.png'+ns.cacheBustParam+'"/>';
                     }
                 }
                 else {

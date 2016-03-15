@@ -1,3 +1,15 @@
+.emojione {
+    font-size: inherit;
+    height: 3ex !important;
+    width: 3.1ex !important;
+    min-height: 20px !important;
+    min-width: 20px !important;
+    display: inline-block !important;
+    margin: -.2ex .15em .2ex !important;
+    line-height: normal !important;
+    vertical-align: middle !important;
+}
+
 #redactor-modal #redactor-modal-list.redactor-emojione-list ul :after {
     clear: both;
 }
