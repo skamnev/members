@@ -10,17 +10,14 @@ use yii\widgets\ActiveForm;
 
 <div class="diary-nutrition-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options'=>['class'=>'form-inline'],
+    ]); ?>
 
-    <?= $form->field($model, 'value')->textarea(['rows' => 6]) ?>
+    <div class="form-group valign-top"></div>
+    <?= $form->field($model, 'value')->textInput(['maxlength' => true])->label(false) ?>
 
-    <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <div class="form-group">
+    <div class="form-group valign-top">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('frontend', 'Create') : Yii::t('frontend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

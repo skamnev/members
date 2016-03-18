@@ -32,12 +32,19 @@ class DiaryNutritionController extends Controller
      */
     public function actionIndex()
     {
+        $model = new DiaryNutrition();
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
+        
         $dataProvider = new ActiveDataProvider([
             'query' => DiaryNutrition::find(),
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 

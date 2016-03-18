@@ -101,3 +101,11 @@ a.desc:after {
     line-height: normal;
     vertical-align: middle;
 }
+
+.diary-nutrition-form input[type="text"] { width: 400px;}
+
+@media (min-width: 768px) {
+    .form-inline .form-group.valign-top {
+        vertical-align: top !important;
+    }
+}

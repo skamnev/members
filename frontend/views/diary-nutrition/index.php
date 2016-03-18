@@ -17,18 +17,25 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(Yii::t('frontend', 'Create Diary Nutrition'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+    <div class="diary-today-log">
+        <h3><?= Yii::t('frontend', 'Today') ?></h3>
+    
+        <?= $this->render('_form', [
+            'model' => $model,
+        ]) ?>
+    </div>
+    
+    
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'value:ntext',
-            'comment:ntext',
             'created_at',
-            'updated_at',
+            'value:ntext',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+            'template' => ''],
         ],
     ]); ?>
 
