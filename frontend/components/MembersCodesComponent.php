@@ -21,9 +21,14 @@ class MembersCodesComponent extends Component
 
         $groupedCodesArray = self::getGroupedCodes();
         //get code id with max sum value
-        list($memberGroupCode) = array_keys($groupedCodesArray['countCodes'], max($groupedCodesArray['countCodes']));
+        
+        if(!empty($groupedCodesArray)) {
+            list($memberGroupCode) = array_keys($groupedCodesArray['countCodes'], max($groupedCodesArray['countCodes']));
 
-        return $memberGroupCode;
+            return $memberGroupCode;
+        }
+        
+        return false;
     }
 
     public static function getGroupedCodes () {
@@ -70,16 +75,23 @@ class MembersCodesComponent extends Component
             /**
              * Get all answers excluding group codes
              */
-            $memberAnswers = MembersQuestionsAnswers::find()->innerJoinWith('questionOption')->where(['not in', 'code_id', $groupedCodesArray['codes']])->all();
+            $memberAnswers = MembersQuestionsAnswers::find()->innerJoinWith('questionOption');
+            if (!empty($groupedCodesArray)) {
+                $memberAnswers->where(['not in', 'code_id', $groupedCodesArray['codes']]);
+            }
+            
+            $memberAnswers->all();
             /**
              * Run throw answers to build where arrays
              */
             foreach ($memberAnswers as $answer) {
-                foreach ($answer->questionOption->code_id as $code_id) {
-                    //build include codes ids array
-                    self::$memberAnswersCodesSqlFilters['include'][] = ['like', 'code_id', "[$code_id]"];
-                    //build exclude codes ids array
-                    self::$memberAnswersCodesSqlFilters['exclude'][] = ['not like', 'no_code_id', "[$code_id]"];
+                if (!empty($answer->questionOption->code_id)) {
+                    foreach ($answer->questionOption->code_id as $code_id) {
+                        //build include codes ids array
+                        self::$memberAnswersCodesSqlFilters['include'][] = ['like', 'code_id', "[$code_id]"];
+                        //build exclude codes ids array
+                        self::$memberAnswersCodesSqlFilters['exclude'][] = ['not like', 'no_code_id', "[$code_id]"];
+                    }
                 }
             }
         }

@@ -70,23 +70,22 @@ class ArticlesController extends MainController
 
         $pagesQuery = CmsPages::find()->where(['is_active' => 1]);
 
-        //add default group to exclude codes array
         if (!empty($memberGroupCode)) {
+            //add default group to exclude codes array
             $memberAnswersCodes['exclude'][] = ['not like', 'no_code_id', "[$memberGroupCode]"];
-        }
-        //add conditions to the where instance if exclude codes array not empty
-        if (count($memberAnswersCodes['exclude'])>0) {
-            $pagesQuery->andWhere(array_merge(['and'],$memberAnswersCodes['exclude']))
-                ->orWhere(['no_code_id' => NULL]);
-        }
-        //add default group to include codes array
-        if (!empty($memberGroupCode)) {
+            //add default group to include codes array
             $memberAnswersCodes['include'][] = ['like', 'code_id', "[$memberGroupCode]"];
-        }
-        //add conditions to the where instance if include codes array not empty
-        if (count($memberAnswersCodes['include'])>0) {
-            $pagesQuery->andWhere(array_merge(['or'],$memberAnswersCodes['include']))
-                ->orWhere(['code_id' => '']);
+            
+            //add conditions to the where instance if exclude codes array not empty
+            if (count($memberAnswersCodes['exclude'])>0) {
+                $pagesQuery->andWhere(array_merge(['and'],$memberAnswersCodes['exclude']))
+                    ->orWhere(['no_code_id' => NULL]);
+            }
+            //add conditions to the where instance if include codes array not empty
+            if (count($memberAnswersCodes['include'])>0) {
+                $pagesQuery->andWhere(array_merge(['or'],$memberAnswersCodes['include']))
+                    ->orWhere(['code_id' => '']);
+            }
         }
 
         $pagesQuery->andWhere(['like', 'category_id',"[$id]"]);
