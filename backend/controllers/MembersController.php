@@ -8,10 +8,12 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Members;
-use backend\models\GeneralSettings;
-use backend\models\CmsPages;
+//use backend\models\GeneralSettings;
+//use backend\models\CmsPages;
 use backend\models\MappingCategories;
 use frontend\models\MembersWeightTracker;
+use backend\models\DiaryNutrition;
+use backend\models\DiaryTraining;
 
 /**
  * MembersController implements the CRUD actions for Members model.
@@ -53,7 +55,7 @@ class MembersController extends Controller
     public function actionView($id)
     {
         // get mapping category
-        $pageModel = CmsPages::findOne(['id' => GeneralSettings::findOne(['name' => 'mapping_page_id'])->value]);
+        //$pageModel = CmsPages::findOne(['id' => GeneralSettings::findOne(['name' => 'mapping_page_id'])->value]);
 
         //$categoryModel = MappingCategories::findOne($pageModel->mapping_id);
         $categoriesModel = MappingCategories::findAll(['is_active' => 1]);
@@ -69,7 +71,35 @@ class MembersController extends Controller
         ]);*/
 
         $weightTracker = new ActiveDataProvider([
-            'query' => MembersWeightTracker::find(['member_id' => Yii::$app->getUser()->id]),
+            'query' => MembersWeightTracker::find(['member_id' => $id]),
+            'sort' => ['defaultOrder' => ['created_at'=>SORT_DESC]]
+        ]);
+        
+        $dairyNutritions = new ActiveDataProvider([
+            'query' => DiaryNutrition::find()
+                ->where(['member_id' => $id])
+                ->select(["*, DATE_FORMAT(created_at,'%m-%d-%Y') as c"])
+                ->groupBy(['c']),
+                //->orderBy('c DESC'),
+            'pagination' => [
+                'pageSize' => 5,
+                //'pageParam' => 'page',
+                'validatePage' => false,
+            ],
+            'sort' => ['defaultOrder' => ['created_at'=>SORT_DESC]]
+        ]);
+        
+        $dairyTraining = new ActiveDataProvider([
+            'query' => DiaryTraining::find()
+                ->where(['member_id' => $id])
+                ->select(["*, DATE_FORMAT(created_at,'%m-%d-%Y') as c"])
+                ->groupBy(['c']),
+                //->orderBy('c DESC'),
+            'pagination' => [
+                'pageSize' => 5,
+                //'pageParam' => 'page',
+                'validatePage' => false,
+            ],
             'sort' => ['defaultOrder' => ['created_at'=>SORT_DESC]]
         ]);
 
@@ -79,7 +109,38 @@ class MembersController extends Controller
             'categoriesModel' => $categoriesModel,
             //'attributesAnswers' => $attributesAnswers,
             'weightTracker' => $weightTracker,
+            'dairyNutritions' => $dairyNutritions,
+            'dairyTraining' => $dairyTraining,
         ]);
+    }
+    
+    public function actionUpdateNutritionComment($id) {
+        $model = DiaryNutrition::findOne($id);
+
+        return $this->updateComment($model, 'dairy/nutritions/_updateComment');
+    }
+    
+    public function actionUpdateTrainingComment($id) {
+        $model = DiaryTraining::findOne($id);
+
+        return $this->updateComment($model, 'dairy/training/_updateComment');
+    }
+    
+    public function updateComment($model, $view) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (Yii::$app->request->isAjax) {
+                $response = ['status' => 'success', 'message' => 'Data was successfully saved', 'attributes' => ['id' => $model->id, 'comment' => $model->comment]];
+                \Yii::$app->response->format = 'json';
+
+                return $response;
+            } else {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        } else {
+            return $this->renderAjax($view, [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**

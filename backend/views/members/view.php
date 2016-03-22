@@ -1,9 +1,11 @@
 <?php
 
 use yii\helpers\Html;
+use yii\bootstrap\Modal;
 use yii\widgets\DetailView;
 use yii\bootstrap\Tabs;
 use yii\grid\GridView;
+use yii\widgets\ListView;
 use yii\data\ActiveDataProvider;
 
 /* @var $this yii\web\View */
@@ -12,6 +14,11 @@ use yii\data\ActiveDataProvider;
 $this->title = $model->username;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Members'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->registerJsFile(Yii::getAlias('@web/js/dairies.js'), ['depends' => [
+    'yii\web\YiiAsset',
+    'yii\bootstrap\BootstrapAsset'],
+]);
 ?>
 <div class="members-view">
 
@@ -129,10 +136,79 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) . '</p>',
         //'active' => true
     ];
+    
+    $tab_items[] = [
+        'label' => Yii::t('backend', 'Dairy Nutritions'),
+        'content' => '<p>' . ListView::widget([
+        'dataProvider' => $dairyNutritions,
+        'itemView' => 'dairy/nutritions/_nutritions',
+        //'viewParams' => ['item' => $model],
+        'options' => [
+            'tag' => 'div',
+            'class' => 'list-wrapper',
+            'id' => 'list-wrapper',
+        ],
+        'layout' => "{pager}\n{items}\n{pager}",//"{pager}\n{items}\n{pager}{summary}",
+        'emptyText' => Yii::t('frontend', 'No results found.'),
+        'summary' => Yii::t('frontend', 'Showing {begin}-{end} of {count} item(s).'),
+    ]) . '</p>',
+        //'active' => true
+    ];
 
+    $tab_items[] = [
+        'label' => Yii::t('backend', 'Dairy Training'),
+        'content' => '<p>' . ListView::widget([
+        'dataProvider' => $dairyTraining,
+        'itemView' => 'dairy/training/_training',
+        //'viewParams' => ['item' => $model],
+        'options' => [
+            'tag' => 'div',
+            'class' => 'list-wrapper',
+            'id' => 'list-wrapper',
+        ],
+        'layout' => "{pager}\n{items}\n{pager}",//"{pager}\n{items}\n{pager}{summary}",
+        'emptyText' => Yii::t('frontend', 'No results found.'),
+        'summary' => Yii::t('frontend', 'Showing {begin}-{end} of {count} item(s).'),
+    ]) . '</p>',
+        //'active' => true
+    ];
+    
     echo Tabs::widget([
         'items' => $tab_items
     ]);
     ?>
+    
+    <?php Modal::begin([
+        'id' => 'activity-modal',
+        'header' => '<h4 class="modal-title">Update Comment</h4>',
+        'closeButton' => [
+            'label' => 'x',
+            'class' => 'btn btn-danger btn-sm pull-right',
+            'id' => 'activity-modal-close'
+        ],
+        //'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>',
+    ]); ?>
+    
+<?php
+$script = <<< JS
+    $(function() {
+        
+        $.fn.activateUpdateLinks();
+        
+        //save the latest tab (http://stackoverflow.com/a/18845441)
+        $('a[data-toggle="tab"]').on('click', function (e) {
+            localStorage.setItem('lastTab', $(e.target).attr('href'));
+        });
+
+        //go to the latest tab, if it exists:
+        var lastTab = localStorage.getItem('lastTab');
+
+        if (lastTab) {
+            $('a[href="'+lastTab+'"]').click();
+        }
+    });
+JS;
+$this->registerJs($script, yii\web\View::POS_END);
+?>
 
 </div>

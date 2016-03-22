@@ -32,6 +32,8 @@ $dataProvider = new ActiveDataProvider([
                 'label' => Yii::t('frontend', 'Meal'),
             ],
 
+            'comment',
+            
             [
                 'class' => 'yii\grid\ActionColumn',
                 'visible' => false,

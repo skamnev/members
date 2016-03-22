@@ -70,7 +70,6 @@ use yii\bootstrap\Tabs;
 
         <h2><?= Html::encode(Yii::t('backend', 'Options')) ?></h2>
 
-
         <div id="statusMsg"></div>
         <p>
         <?php
