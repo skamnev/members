@@ -1,12 +1,12 @@
 <?php
 
-namespace frontend\models;
+namespace backend\models;
 
 use Yii;
 use yii\db\Expression;
 
 /**
- * This is the model class for table "diary_training".
+ * This is the model class for table "diary_nutrition".
  *
  * @property integer $id
  * @property string $value
@@ -14,7 +14,7 @@ use yii\db\Expression;
  * @property string $created_at
  * @property string $updated_at
  */
-class DiaryTraining extends \yii\db\ActiveRecord
+class DiaryNutrition extends \yii\db\ActiveRecord
 {
     public function behaviors()
     {
@@ -25,12 +25,13 @@ class DiaryTraining extends \yii\db\ActiveRecord
             ],
         ];
     }
+    
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'diary_training';
+        return 'diary_nutrition';
     }
 
     /**

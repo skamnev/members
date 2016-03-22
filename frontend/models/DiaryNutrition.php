@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "diary_nutrition".
@@ -15,6 +16,16 @@ use Yii;
  */
 class DiaryNutrition extends \yii\db\ActiveRecord
 {
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'value' => new Expression('NOW()'),
+            ],
+        ];
+    }
+    
     /**
      * @inheritdoc
      */
@@ -30,6 +41,8 @@ class DiaryNutrition extends \yii\db\ActiveRecord
     {
         return [
             [['value', 'comment'], 'string'],
+            [['member_id'], 'integer'],
+            [['member_id'], 'required'],
             [['created_at', 'updated_at'], 'safe']
         ];
     }

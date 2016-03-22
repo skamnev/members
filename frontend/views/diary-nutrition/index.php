@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -13,10 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('frontend', 'Create Diary Nutrition'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <div class="diary-today-log">
         <h3><?= Yii::t('frontend', 'Today') ?></h3>
     
@@ -25,18 +21,18 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </div>
     
-    
-    <?= GridView::widget([
+    <?= ListView::widget([
         'dataProvider' => $dataProvider,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'created_at',
-            'value:ntext',
-
-            ['class' => 'yii\grid\ActionColumn',
-            'template' => ''],
+        'itemView' => '_item',
+        //'viewParams' => ['item' => $model],
+        'options' => [
+            'tag' => 'div',
+            'class' => 'list-wrapper',
+            'id' => 'list-wrapper',
         ],
+        'layout' => "{pager}\n{items}\n{pager}",//"{pager}\n{items}\n{pager}{summary}",
+        'emptyText' => Yii::t('frontend', 'No results found.'),
+        'summary' => Yii::t('frontend', 'Showing {begin}-{end} of {count} item(s).'),
     ]); ?>
-
+    
 </div>

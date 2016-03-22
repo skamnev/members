@@ -55,6 +55,7 @@ return [
     'Save' => '',
     'Showing {begin}-{end} of {count} item(s).' => '',
     'Signup' => '',
+    'Today' => '',
     'Update' => '',
     'Url' => '',
     'Value' => '',

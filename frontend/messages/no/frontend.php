@@ -54,6 +54,7 @@ return [
     'Save' => 'Lagre',
     'Showing {begin}-{end} of {count} item(s).' => 'Viser {begin}-{end} av {count} elementer.',
     'Signup' => 'Registrer deg',
+    'Today' => '',
     'Update' => 'Oppdater',
     'Url' => '',
     'Value' => 'Verdi',
