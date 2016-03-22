@@ -75,7 +75,7 @@ class MembersController extends Controller
             'sort' => ['defaultOrder' => ['created_at'=>SORT_DESC]]
         ]);
         
-        $dairyNutritions = new ActiveDataProvider([
+        $diaryNutritions = new ActiveDataProvider([
             'query' => DiaryNutrition::find()
                 ->where(['member_id' => $id])
                 ->select(["*, DATE_FORMAT(created_at,'%m-%d-%Y') as c"])
@@ -89,7 +89,7 @@ class MembersController extends Controller
             'sort' => ['defaultOrder' => ['created_at'=>SORT_DESC]]
         ]);
         
-        $dairyTraining = new ActiveDataProvider([
+        $diaryTraining = new ActiveDataProvider([
             'query' => DiaryTraining::find()
                 ->where(['member_id' => $id])
                 ->select(["*, DATE_FORMAT(created_at,'%m-%d-%Y') as c"])
@@ -109,21 +109,21 @@ class MembersController extends Controller
             'categoriesModel' => $categoriesModel,
             //'attributesAnswers' => $attributesAnswers,
             'weightTracker' => $weightTracker,
-            'dairyNutritions' => $dairyNutritions,
-            'dairyTraining' => $dairyTraining,
+            'diaryNutritions' => $diaryNutritions,
+            'diaryTraining' => $diaryTraining,
         ]);
     }
     
     public function actionUpdateNutritionComment($id) {
         $model = DiaryNutrition::findOne($id);
 
-        return $this->updateComment($model, 'dairy/nutritions/_updateComment');
+        return $this->updateComment($model, 'diary/nutritions/_updateComment');
     }
     
     public function actionUpdateTrainingComment($id) {
         $model = DiaryTraining::findOne($id);
 
-        return $this->updateComment($model, 'dairy/training/_updateComment');
+        return $this->updateComment($model, 'diary/training/_updateComment');
     }
     
     public function updateComment($model, $view) {

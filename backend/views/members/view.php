@@ -138,10 +138,10 @@ $this->registerJsFile(Yii::getAlias('@web/js/dairies.js'), ['depends' => [
     ];
     
     $tab_items[] = [
-        'label' => Yii::t('backend', 'Dairy Nutritions'),
+        'label' => Yii::t('backend', 'Diary Nutritions'),
         'content' => '<p>' . ListView::widget([
-        'dataProvider' => $dairyNutritions,
-        'itemView' => 'dairy/nutritions/_nutritions',
+        'dataProvider' => $diaryNutritions,
+        'itemView' => 'diary/nutritions/_nutritions',
         //'viewParams' => ['item' => $model],
         'options' => [
             'tag' => 'div',
@@ -156,10 +156,10 @@ $this->registerJsFile(Yii::getAlias('@web/js/dairies.js'), ['depends' => [
     ];
 
     $tab_items[] = [
-        'label' => Yii::t('backend', 'Dairy Training'),
+        'label' => Yii::t('backend', 'Diary Training'),
         'content' => '<p>' . ListView::widget([
-        'dataProvider' => $dairyTraining,
-        'itemView' => 'dairy/training/_training',
+        'dataProvider' => $diaryTraining,
+        'itemView' => 'diary/training/_training',
         //'viewParams' => ['item' => $model],
         'options' => [
             'tag' => 'div',

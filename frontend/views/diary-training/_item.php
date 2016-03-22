@@ -4,20 +4,20 @@ use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use frontend\models\DiaryTraining;
 
-$dairyDate = date('m-d-Y', strtotime($model->created_at));
+$diaryDate = date('m-d-Y', strtotime($model->created_at));
 
 $dataProvider = new ActiveDataProvider([
-    'query' => DiaryTraining::find()->where(['=', "DATE_FORMAT(created_at,'%m-%d-%Y')", $dairyDate])
+    'query' => DiaryTraining::find()->where(['=', "DATE_FORMAT(created_at,'%m-%d-%Y')", $diaryDate])
                                     ->andWhere(['member_id' => Yii::$app->getUser()->id])
                                     ->orderBy('created_at ASC'),
 ]);
 
 ?>
 
-<div class="dairy-item">
+<div class="diary-item">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'summary' => $dairyDate == date('m-d-Y')?Yii::t('frontend', 'Today'):$dairyDate,
+        'summary' => $diaryDate == date('m-d-Y')?Yii::t('frontend', 'Today'):$diaryDate,
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
 
