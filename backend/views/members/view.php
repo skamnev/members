@@ -188,6 +188,7 @@ $this->registerJsFile(Yii::getAlias('@web/js/dairies.js'), ['depends' => [
         ],
         //'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>',
     ]); ?>
+    <?php Modal::end(); ?>
     
 <?php
 $script = <<< JS
