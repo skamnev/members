@@ -18,8 +18,15 @@ $this->registerJsFile(Yii::getAlias('@web/js/redactor.emotions.js'), ['depends' 
 $this->registerJsFile(Yii::getAlias('@web/js/emojione.js'), ['depends' => [
     'yii\web\YiiAsset'],
 ]);
+
+$this->registerJsFile(Yii::getAlias('@web/js/redactor.undo.js'), ['depends' => [
+    'yii\web\YiiAsset'],
+    'position' => \yii\web\View::POS_END
+]);
+
 $this->registerCssFile(Yii::getAlias('@web/css/redactor.emotions.css'));
 $this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
+
 ?>
 <div class="cms-pages-form">
     <p>
@@ -29,6 +36,21 @@ $this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
     <?php $form = ActiveForm::begin([
         'options' => ['enctype'=>'multipart/form-data']
     ]); ?>
+    
+    <p>
+        
+        <?//= Html::a(Yii::t('backend', 'Preview'), ["../../" . Yii::$app->language ."/article/$categoryModel->id/" . ($model->identifier?$model->identifier:$model->id)], ['class' => 'btn btn-success', 'target'=>'_blank']) ?>
+    </p>
+
+    <div class="form-group">
+        <?= Html::a( 'Back', ['cms-pages-categories/view', 'category_id' => $categoryModel->id], ['class' => 'btn btn-primary']); ?>
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('backend', 'Preview'), ["preview", 'category_id' => $categoryModel->id, 'id' => $model->id], ['class' => 'btn btn-success', 'target'=>'_blank']) ?>
+    </div>
+    <p>
+        <?php $frontend_url = Yii::$app->urlManagerFrontEnd->createAbsoluteUrl(['/article/' . $categoryModel->id . '/' . ($model->identifier?$model->identifier:$model->id)]);?>
+        <?= yii\bootstrap\Html::textInput('frontend_link', $frontend_url, ['maxlength' => true, 'style'=>'width: 100%', 'disabled' => 'disabled']);?>
+    </p>
 
     <?= $form->errorSummary($model); ?>
 
@@ -39,7 +61,7 @@ $this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
         'imageUpload' => ['/redactor/upload/image'],
         'fileUpload' => ['/redactor/upload/file'],
         'lang' => Yii::$app->language,
-        'plugins' => ['fontcolor','imagemanager', 'emotions']
+        'plugins' => ['bufferbuttons','fontcolor','imagemanager', 'emotions']
     ];
 
     foreach($languages as $key => $language) {
