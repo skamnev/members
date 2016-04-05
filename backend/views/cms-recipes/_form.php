@@ -31,6 +31,16 @@ $this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
         'options' => ['enctype'=>'multipart/form-data']
     ]); ?>
 
+    <div class="form-group">
+        <?= Html::a( 'Back', ['cms-recipes-categories/view', 'category_id' => $categoryModel->id], ['class' => 'btn btn-primary']); ?>
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('backend', 'Preview'), ["preview", 'category_id' => $categoryModel->id, 'id' => $model->id], ['class' => 'btn btn-success', 'target'=>'_blank']) ?>
+    </div>
+    <p>
+        <?php $frontend_url = Yii::$app->urlManagerFrontEnd->createAbsoluteUrl(['/recipe/' . $categoryModel->id . '/' . ($model->identifier?$model->identifier:$model->id)]);?>
+        <?= yii\bootstrap\Html::textInput('frontend_link', $frontend_url, ['maxlength' => true, 'style'=>'width: 100%', 'disabled' => 'disabled']);?>
+    </p>
+    
     <?= $form->errorSummary($model); ?>
 
     <?php
@@ -131,6 +141,7 @@ $this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
     <?= $form->field($model, 'is_active')->checkbox(['label' => Yii::t('backend','Active')]); ?>
 
     <div class="form-group">
+        <?= Html::a( 'Back', ['cms-recipes-categories/view', 'category_id' => $categoryModel->id], ['class' => 'btn btn-primary']); ?>
         <?= Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

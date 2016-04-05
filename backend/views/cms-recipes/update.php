@@ -13,15 +13,6 @@ $this->params['breadcrumbs'][] = Yii::t('backend', 'Update') . ' ' . $model->tit
 <div class="cms-recipes-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a(Yii::t('backend', 'Preview'), ["preview", 'category_id' => $categoryModel->id, 'id' => $model->id], ['class' => 'btn btn-success', 'target'=>'_blank']) ?>
-        <?//= Html::a(Yii::t('backend', 'Preview'), ["../../" . Yii::$app->language ."/recipe/$categoryModel->id/" . ($model->identifier?$model->identifier:$model->id)], ['class' => 'btn btn-success', 'target'=>'_blank']) ?>
-    </p>
-    <p>
-        <?php $frontend_url = Yii::$app->urlManagerFrontEnd->createAbsoluteUrl(['/recipe/' . $categoryModel->id . '/' . ($model->identifier?$model->identifier:$model->id)]);?>
-        <?= yii\bootstrap\Html::textInput('frontend_link', $frontend_url, ['maxlength' => true, 'style'=>'width: 100%', 'disabled' => 'disabled']);?>
-    </p>
     
     <?= $this->render('_form', [
         'model' => $model,

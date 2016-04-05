@@ -154,11 +154,12 @@ class MappingController extends MainController
             }
 
             $settingsModel = GeneralSettings::findOne(['name' => 'mapping_page_id']);
-            $pageModel = CmsPages::findOne(['id' => $settingsModel->value]);
+            
+            //$pageModel = CmsPages::findOne(['id' => $settingsModel->value]);
 
             return $this->render('mapping', [
                 'steps' => $steps,
-                'pageModel' => $pageModel,
+                //'pageModel' => $pageModel,
             ]);
 
             $user = Yii::$app->getUser()->getIdentity();

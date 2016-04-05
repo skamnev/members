@@ -6,7 +6,7 @@
 
 use yii\helpers\Html;
 
-$this->title = $pageModel->title;
+//$this->title = $pageModel->title;
 $this->params['breadcrumbs'][] = $this->title;
 
 
@@ -14,14 +14,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
     <?/* display page heading if exists */?>
-    <?php if (!empty($pageModel->content_heading)): ?>
+    <?php /*if (!empty($pageModel->content_heading)): ?>
         <h1><?= Html::encode($pageModel->content_heading) ?></h1>
-    <?php endif; ?>
+    <?php //endif; ?>
 
     <?/* display page content if exists */?>
-    <?php if (!empty($pageModel->content)): ?>
+    <?php /*if (!empty($pageModel->content)): ?>
     <p><?= $pageModel->content;?></p>
-    <?php endif; ?>
+    <?php endif; */?>
 
     <div id="mapping-wrapper">
 

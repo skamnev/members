@@ -12,7 +12,6 @@ $this->params['breadcrumbs'][] = ['label' => $category->title, 'url' => ['recipe
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cms-recipes-view">
-
     <h1>
         <?php if ($model->content_heading):?>
             <?= Html::encode($model->content_heading) ?>
@@ -21,9 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php endif; ?>
     </h1>
 
-    <?php if ($model->content): ?>
+    <?php if ($model->{'content_' . Yii::$app->language}): ?>
     <div>
-        <p><?= $model->content ?></p>
+        <p><?= $model->{'content_' . Yii::$app->language} ?></p>
     </div>
     <?php endif;?>
 </div>
