@@ -3,7 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use backend\assets\AppAsset;
+use backend\assets\AppPreviewAsset;
 use backend\widgets\WLang;
 use backend\models\Lang;
 
@@ -16,7 +16,7 @@ use common\widgets\Alert;
 use webvimark\modules\UserManagement\components\GhostMenu;
 use webvimark\modules\UserManagement\UserManagementModule;
 
-AppAsset::register($this);
+AppPreviewAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
