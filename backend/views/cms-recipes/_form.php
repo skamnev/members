@@ -84,7 +84,7 @@ $this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
         $language_items[] = [
             'label' => Yii::t('backend',$language->name),
             'content' => "<p>$field_title $field_content $field_content_heading $field_meta_keywords</p>",
-            'active' => $key==0
+            'active' => $language->url==Yii::$app->language
         ];
     }
 
