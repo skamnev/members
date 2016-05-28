@@ -2,20 +2,19 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use \backend\models\CmsPages;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('backend', 'Pages');
+$this->title = Yii::t('backend', 'Meal Plans');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="cms-pages-index">
+<div class="cms-meal-plan-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('backend', 'Create Page'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('backend', 'Create Meal Plan'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -33,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             array(
                 'attribute'=>'is_active',
-                'filter'=>Html::activeDropDownList($searchModel, 'is_active', CmsPages::dropdownActive(), ['class' => 'form-control', 'prompt' => Yii::t('backend', 'All')]),
+                'filter'=>Html::activeDropDownList($searchModel, 'is_active', \backend\models\CmsMealPlan::dropdownActive(), ['class' => 'form-control', 'prompt' => Yii::t('backend', 'All')]),
                 'format' => 'boolean',
             ),
             'sort_order',

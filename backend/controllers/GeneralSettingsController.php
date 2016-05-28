@@ -47,9 +47,27 @@ class GeneralSettingsController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->getSession()->setFlash('success', 'Successfully saved.');
-            return $this->redirect(['weight_tracker/weight-tracker']);
+            return $this->redirect(['weight-tracker']);
         } else {
             return $this->render('weight_tracker/weight-tracker', [
+                'model' => $model,
+            ]);
+        }
+    }
+    
+    /**
+     * Lists all GeneralSettings models.
+     * @return mixed
+     */
+    public function actionMealPlan()
+    {
+        $model = $this->findModel(['name' => 'current_mealplan_id']);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', 'Successfully saved.');
+            return $this->redirect(['meal-plan']);
+        } else {
+            return $this->render('mealplan/mealplan', [
                 'model' => $model,
             ]);
         }

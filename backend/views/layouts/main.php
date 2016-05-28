@@ -55,6 +55,7 @@ AppAsset::register($this);
             'items' => [
                 ['label' => Yii::t('backend','Pages'), 'url' => ['/cms-pages-categories/index']],
                 ['label' => Yii::t('backend','Recipes'), 'url' => ['/cms-recipes-categories/index']],
+                ['label' => Yii::t('backend','Meal Plans'), 'url' => ['/meal-plan/index']],
                 ['label' => Yii::t('backend','FAQ'), 'url' => ['/cms-faq-categories/index']],
             ]],
         ['label' => Yii::t('backend', 'Settings'),
@@ -63,6 +64,7 @@ AppAsset::register($this);
                 ['label' => Yii::t('backend','Languages'), 'url' => ['/lang/index']],
                 ['label' => Yii::t('backend','Fields Types'), 'url' => ['/fields-types/index']],
                 ['label' => Yii::t('backend','Weight Tracker'), 'url' => ['/general-settings/weight-tracker']],
+                ['label' => Yii::t('backend','Meal Plan'), 'url' => ['/general-settings/meal-plan']],
                 //['label' => Yii::t('backend','Mapping Page'), 'url' => ['/general-settings/mapping-page']],
                 //['label' => Yii::t('backend','Attributes'), 'url' => ['/members-attributes/index']],
             ]],
