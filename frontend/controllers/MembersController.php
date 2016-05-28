@@ -110,6 +110,50 @@ class MembersController extends MainController {
      *
      * @return mixed
      */
+    public function actionMealPlan()
+    {
+        $userModel = Yii::$app->user->getIdentity();
+        
+        if ($userModel->load(Yii::$app->request->post()) && $userModel->save()) {
+            Yii::$app->getSession()->setFlash('success', 'Successfully updated.');
+        } else {
+            
+        }
+        
+        $settingsModel = GeneralSettings::findOne(['name' => 'current_mealplan_id']);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => MembersWeightTracker::find()->where(['member_id' => Yii::$app->getUser()->id]),
+            'sort' => ['defaultOrder' => ['created_at'=>SORT_DESC]]
+        ]);
+
+        $lastCreateDate = 0;
+        $currentWeight = 0;
+        if ($dataProvider->count > 0) {
+            $lastCreateDate = $dataProvider->getModels()[0]->created_at;
+            $currentWeight = $dataProvider->getModels()[0]->value;
+        }
+
+        $allowAddWeight = false;
+
+        if ((time() - strtotime($lastCreateDate))>($settingsModel->value*3600*24)) {
+            $allowAddWeight = true;
+        }
+
+        return $this->render('weight_tracker', [
+            'dataProvider' => $dataProvider,
+            'startingWeight' => empty($userModel->weight)?'':$userModel->weight,
+            'currentWeight' => $currentWeight,
+            'allowAddWeight' => $allowAddWeight,
+            'userModel' => $userModel,
+        ]);
+    }
+    
+    /**
+     * Displays weight tracker page.
+     *
+     * @return mixed
+     */
     public function actionWeightTracker()
     {
         $userModel = Yii::$app->user->getIdentity();

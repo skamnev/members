@@ -43,6 +43,7 @@ AppAsset::register($this);
             ['label' => Yii::t('frontend', 'My Page'),
                 'items' => [
                     ['label' => Yii::t('frontend','Weight Tracker'), 'url' => ['/members/weight-tracker']],
+                    ['label' => Yii::t('frontend','Meal Plan'), 'url' => ['/members/meal-plan']],
                 ]],
             ['label' => Yii::t('frontend', 'PDFs'), 'url' => ['/members/pdfs']],
             ['label' => Yii::t('frontend', 'Recipes'), 'url' => ['/recipes/categories']],
