@@ -18,8 +18,11 @@ $this->registerJsFile(Yii::getAlias('@web/js/redactor.emotions.js'), ['depends' 
 $this->registerJsFile(Yii::getAlias('@web/js/emojione.js'), ['depends' => [
     'yii\web\YiiAsset'],
 ]);
-
 $this->registerJsFile(Yii::getAlias('@web/js/redactor.undo.js'), ['depends' => [
+    'yii\web\YiiAsset'],
+    'position' => \yii\web\View::POS_END
+]);
+$this->registerJsFile(Yii::getAlias('@web/js/redactor.fontsize.js'), ['depends' => [
     'yii\web\YiiAsset'],
     'position' => \yii\web\View::POS_END
 ]);
@@ -61,14 +64,14 @@ $this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
         'imageUpload' => ['/redactor/upload/image'],
         'fileUpload' => ['/redactor/upload/file'],
         'lang' => Yii::$app->language,
-        'plugins' => ['bufferbuttons','fontcolor','imagemanager', 'emotions']
+        'plugins' => ['fontsize', 'bufferbuttons','fontcolor','imagemanager', 'emotions']
     ];
 
     foreach($languages as $key => $language) {
         $field_title = $form->field($model, "title_$language->url")->textInput(['maxlength' => true])->label('Page Title');
 
         $field_content = $form->field($model, "content_$language->url")->widget(\yii\redactor\widgets\Redactor::className(),[
-            'clientOptions' => $redactorClientOptions
+            'clientOptions' => $redactorClientOptions,
         ]);
 
         $field_content_heading = $form->field($model, "content_heading_$language->url")->textInput(['maxlength' => true])->label(Yii::t('backend','Page Heading'));

@@ -22,6 +22,10 @@ $this->registerJsFile(Yii::getAlias('@web/js/redactor.undo.js'), ['depends' => [
     'yii\web\YiiAsset'],
     'position' => \yii\web\View::POS_END
 ]);
+$this->registerJsFile(Yii::getAlias('@web/js/redactor.fontsize.js'), ['depends' => [
+    'yii\web\YiiAsset'],
+    'position' => \yii\web\View::POS_END
+]);
 
 $this->registerCssFile(Yii::getAlias('@web/css/redactor.emotions.css'));
 $this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
@@ -55,7 +59,7 @@ $this->registerCssFile(Yii::getAlias('@web/css/emojione.min.css'));
         'imageUpload' => ['/redactor/upload/image'],
         'fileUpload' => ['/redactor/upload/file'],
         'lang' => Yii::$app->language,
-        'plugins' => ['bufferbuttons','fontcolor','imagemanager', 'emotions']
+        'plugins' => ['fontsize', 'bufferbuttons','fontcolor','imagemanager', 'emotions']
     ];
 
     foreach($languages as $key => $language) {
