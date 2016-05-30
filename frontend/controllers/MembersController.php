@@ -15,6 +15,7 @@ use yii\db\Expression;
 use yii\filters\AccessControl;
 use frontend\models\MembersWeightTracker;
 use backend\models\GeneralSettings;
+use backend\models\CmsMealPlan;
 
 /**
  * LangController implements the CRUD actions for Lang model.
@@ -111,41 +112,14 @@ class MembersController extends MainController {
      * @return mixed
      */
     public function actionMealPlan()
-    {
-        $userModel = Yii::$app->user->getIdentity();
+    {   
+        Yii::$app->MealPlanComponent->updateMealPlanId();
         
-        if ($userModel->load(Yii::$app->request->post()) && $userModel->save()) {
-            Yii::$app->getSession()->setFlash('success', 'Successfully updated.');
-        } else {
-            
-        }
-        
-        $settingsModel = GeneralSettings::findOne(['name' => 'mealplan_current_id']);
+        $mealplanCurrentIdModel = GeneralSettings::findOne(['name' => 'mealplan_current_id']);
+        $mealplanCurrentModel = CmsMealPlan::findOne($mealplanCurrentIdModel->value);
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => MembersWeightTracker::find()->where(['member_id' => Yii::$app->getUser()->id]),
-            'sort' => ['defaultOrder' => ['created_at'=>SORT_DESC]]
-        ]);
-
-        $lastCreateDate = 0;
-        $currentWeight = 0;
-        if ($dataProvider->count > 0) {
-            $lastCreateDate = $dataProvider->getModels()[0]->created_at;
-            $currentWeight = $dataProvider->getModels()[0]->value;
-        }
-
-        $allowAddWeight = false;
-
-        if ((time() - strtotime($lastCreateDate))>($settingsModel->value*3600*24)) {
-            $allowAddWeight = true;
-        }
-
-        return $this->render('weight_tracker', [
-            'dataProvider' => $dataProvider,
-            'startingWeight' => empty($userModel->weight)?'':$userModel->weight,
-            'currentWeight' => $currentWeight,
-            'allowAddWeight' => $allowAddWeight,
-            'userModel' => $userModel,
+        return $this->render('mealplan/index', [
+            'mealplanModel' => $mealplanCurrentModel,
         ]);
     }
     

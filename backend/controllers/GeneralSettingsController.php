@@ -73,6 +73,12 @@ class GeneralSettingsController extends Controller
                $model->save();
             }
             
+            $modelPlanFreq = $this->findModel(['name' => 'mealplan_update_time']);
+            if ($modelPlanFreq) {
+                $modelPlanFreq->value = strtotime(date('Y-m-d'));
+                $modelPlanFreq->save();
+            }
+            
             Yii::$app->getSession()->setFlash('success', 'Successfully saved.');
             return $this->redirect(['meal-plan']);
         } else {

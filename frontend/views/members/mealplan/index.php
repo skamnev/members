@@ -1,26 +1,25 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\CmsPages */
 $_prefix = '_' . Yii::$app->language;
 
-$this->title = empty($model->{'title' . $_prefix})?$model->title:$model->{'title' . $_prefix};
+$this->title = empty($mealplanModel->{'title' . $_prefix})?$mealplanModel->title:$mealplanModel->{'title' . $_prefix};
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cms-pages-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php if ($model->{'content_' . Yii::$app->language}):?>
+    <?php if ($mealplanModel->{'content_' . Yii::$app->language}):?>
         <div>
-            <p><?= $model->{'content_' . Yii::$app->language} ?></p>
+            <p><?= $mealplanModel->{'content_' . Yii::$app->language} ?></p>
         </div>
-    <?php elseif ($model->content): ?>
+    <?php elseif ($mealplanModel->content): ?>
         <div>
-            <p><?= $model->content ?></p>
+            <p><?= $mealplanModel->content ?></p>
         </div>
     <?php endif;?>
 </div>
