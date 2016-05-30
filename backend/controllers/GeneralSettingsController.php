@@ -61,14 +61,24 @@ class GeneralSettingsController extends Controller
      */
     public function actionMealPlan()
     {
-        $model = $this->findModel(['name' => 'current_mealplan_id']);
+        $modelPlanId = $this->findModel(['name' => 'mealplan_current_id']);
+        $modelPlanFreq = $this->findModel(['name' => 'mealplan_update_freq']);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if (Yii::$app->request->post()) {
+            $_values = Yii::$app->request->post()['values'];//$modelPlanId->load(Yii::$app->request->post()) && $modelPlanId->save();
+            
+            foreach ($_values as $_key => $_value) {
+               $model = $this->findModel(['name' => $_key]);
+               $model->value = $_value;
+               $model->save();
+            }
+            
             Yii::$app->getSession()->setFlash('success', 'Successfully saved.');
             return $this->redirect(['meal-plan']);
         } else {
             return $this->render('mealplan/mealplan', [
-                'model' => $model,
+                'modelPlanId' => $modelPlanId,
+                'modelPlanFreq' => $modelPlanFreq,
             ]);
         }
     }

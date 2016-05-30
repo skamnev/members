@@ -27,7 +27,6 @@ class GeneralSettings extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['value'], 'string'],
             [['name'], 'string', 'max' => 128]
         ];
     }

@@ -120,7 +120,7 @@ class MembersController extends MainController {
             
         }
         
-        $settingsModel = GeneralSettings::findOne(['name' => 'current_mealplan_id']);
+        $settingsModel = GeneralSettings::findOne(['name' => 'mealplan_current_id']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => MembersWeightTracker::find()->where(['member_id' => Yii::$app->getUser()->id]),

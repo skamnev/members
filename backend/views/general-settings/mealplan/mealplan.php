@@ -15,7 +15,8 @@ $this->params['breadcrumbs'][] = Yii::t('backend', 'Update Meal Plan');
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form_mealplan', [
-        'model' => $model,
+        'modelPlanId' => $modelPlanId,
+        'modelPlanFreq' => $modelPlanFreq,
     ]) ?>
 
 </div>

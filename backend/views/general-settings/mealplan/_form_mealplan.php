@@ -7,21 +7,27 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model backend\models\GeneralSettings */
 /* @var $form yii\widgets\ActiveForm */
-$items = ArrayHelper::map(\backend\models\CmsMealPlan::find()->all(), 'id', 'title');
+$plan_items = ArrayHelper::map(\backend\models\CmsMealPlan::find()->all(), 'id', 'title');
+$update_freq_items = [];
 
+for ($week=0; $week<7; $week++) {
+    $update_freq_items[$week] = date('D', time('Mon')+$week*24*3600);
+}
 ?>
 
 <div class="general-settings-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'value')->dropDownList($items)->label('Current Mealplan') ?>
+    
+    <?= $form->field($modelPlanId, 'value')->dropDownList($plan_items, ['name' => 'values[mealplan_current_id]'])->label('Current Meal Plan') ?>
+    
+    <?= $form->field($modelPlanFreq, 'value')->dropDownList($update_freq_items, ['name' => 'values[mealplan_update_freq]'])->label('Meal Plan Update Frequency') ?>
 
-    <?= $form->field($model, 'id')->hiddenInput()->label(false); ?>
 
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton(Yii::t('backend', 'Update'), ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
