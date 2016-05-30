@@ -28,7 +28,7 @@ class MembersController extends MainController {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'backend', 'weight-tracker', 'pdfs'],
+                'only' => ['logout', 'signup', 'backend', 'meal-plan', 'weight-tracker', 'pdfs'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -36,7 +36,7 @@ class MembersController extends MainController {
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'backend', 'weight-tracker', 'pdfs'],
+                        'actions' => ['logout', 'backend', 'meal-plan', 'weight-tracker', 'pdfs'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
