@@ -61,26 +61,34 @@ class GeneralSettingsController extends Controller
      */
     public function actionMealPlan()
     {
-        $modelPlanId = $this->findModel(['name' => 'mealplan_current_id']);
-        $modelPlanFreq = $this->findModel(['name' => 'mealplan_update_freq']);
 
         if (Yii::$app->request->post()) {
             $_values = Yii::$app->request->post()['values'];//$modelPlanId->load(Yii::$app->request->post()) && $modelPlanId->save();
             
             foreach ($_values as $_key => $_value) {
                $model = $this->findModel(['name' => $_key]);
-               $model->value = $_value;
-               $model->save();
+               if ($model) {
+                    $model->value = $_value;
+                    if ($model->validate()) {
+                        $model->save();
+                    }
+               }
             }
             
-            $modelPlanFreq = $this->findModel(['name' => 'mealplan_update_time']);
-            if ($modelPlanFreq) {
-                $modelPlanFreq->value = strtotime(date('Y-m-d'));
-                $modelPlanFreq->save();
+            $modelPlanUpdateTime = $this->findModel(['name' => 'mealplan_update_time']);
+            if ($modelPlanUpdateTime) {
+                $modelPlanUpdateTime->value = (string) strtotime(date('Y-m-d'));
+                if ($modelPlanUpdateTime->validate()) {
+                    $modelPlanUpdateTime->save();
+                }
             }
             
             Yii::$app->getSession()->setFlash('success', 'Successfully saved.');
         }
+        
+        $modelPlanId = $this->findModel(['name' => 'mealplan_current_id']);
+        $modelPlanFreq = $this->findModel(['name' => 'mealplan_update_freq']);
+        
         return $this->render('mealplan/mealplan', [
             'modelPlanId' => $modelPlanId,
             'modelPlanFreq' => $modelPlanFreq,
