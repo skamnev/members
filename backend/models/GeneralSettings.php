@@ -18,7 +18,7 @@ class GeneralSettings extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'general_settings';
+        return '{{%general_settings}}';
     }
 
     /**

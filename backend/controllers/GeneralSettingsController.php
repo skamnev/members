@@ -80,13 +80,11 @@ class GeneralSettingsController extends Controller
             }
             
             Yii::$app->getSession()->setFlash('success', 'Successfully saved.');
-            return $this->redirect(['meal-plan']);
-        } else {
-            return $this->render('mealplan/mealplan', [
-                'modelPlanId' => $modelPlanId,
-                'modelPlanFreq' => $modelPlanFreq,
-            ]);
         }
+        return $this->render('mealplan/mealplan', [
+            'modelPlanId' => $modelPlanId,
+            'modelPlanFreq' => $modelPlanFreq,
+        ]);
     }
 
     /**
