@@ -102,15 +102,19 @@ class MembersCodesComponent extends Component
     public static function filterOffMemberCodes($content) {
         $memberCodes = self::getMemberCodes(true);
 
-        foreach ($memberCodes as $memberCode) {
-            $content = preg_replace("/\[$memberCode\](.*)\[\/$memberCode\]/", "$1", $content);
-        }
+        try {
+            foreach ($memberCodes as $memberCode) {
+                $content = @preg_replace("/\[$memberCode\](.*)\[\/$memberCode\]/", "$1", $content);
+            }
 
-        //find codes left after replacement to remove it at all
-        preg_match_all("/(?<=\[\/).*?(?=\])/", $content, $codes_left);
+            //find codes left after replacement to remove it at all
+            preg_match_all("/(?<=\[\/).*?(?=\])/", $content, $codes_left);
 
-        foreach ($codes_left[0] as $code) {
-            $content = preg_replace("/\[$code\](.*)\[\/$code\]/", "$2", $content);
+            foreach ($codes_left[0] as $code) {
+                $content = @preg_replace("/\[$code\](.*)\[\/$code\]/", "$2", $content);
+            }
+        } catch (ErrorException $e) {
+            Yii::warning($e->getMessage());
         }
 
         return $content;
