@@ -97,7 +97,7 @@ class MainController extends Controller {
 
         $steps = Yii::$app->MappingComponent->getSteps();
 
-        if (!empty($steps) && $route != 'mapping/index' && $route != 'site/changepassword') {
+        if (!empty($steps) && $route != 'mapping/index' && $route != 'site/changepassword' && $route != 'payment/index') {
             return Yii::$app->response->redirect(array('mapping/index'));
         }
     }

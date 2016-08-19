@@ -19,7 +19,7 @@ class MappingWidget extends Widget {
         $category = MappingCategories::findOne($this->mappingCategoryId);
         $route = Yii::$app->controller->route;
         $request_id = Yii::$app->request->get('id');
-        $ignore_route = array('site/changepassword', 'mapping/index');
+        $ignore_route = array('site/changepassword', 'mapping/index', 'payment/index');
 
         if (($route == 'mapping/update-answer' && $request_id == $this->mappingCategoryId) || in_array($route, $ignore_route) ) {
             return false;
