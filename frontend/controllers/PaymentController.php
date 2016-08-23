@@ -169,6 +169,8 @@ class PaymentController extends MainController
         return Yii::$app->get('braintree')->planId;
     }
     public function actionThankyou() {
+        return Yii::$app->response->redirect(array('mapping/index'));
+        //@TODO - develop thank you page
         return $this->render('thankyou', []);
     }
 

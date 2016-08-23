@@ -75,6 +75,31 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
+        <?php //skamnev - debug information?>
+        <div id="membersCodesList" style="color: red;">
+            <br/>
+            <?php
+                $memberGroupCode = \frontend\components\MembersCodesComponent::getMemberGroupCode();
+                $memberAnswersCodes = \frontend\components\MembersCodesComponent::getMemberCodes(true);
+            ?>
+            <div>
+                <h5>Members Group Code: <b><?php echo empty($memberGroupCode)?'Not Set':$memberGroupCode;?></b></h5>
+            </div>
+            <div>
+                <?php if (!empty($memberAnswersCodes)):?>
+                    <h5>Members Codes List:</h5>
+                    <ul>
+                        <?php foreach ($memberAnswersCodes as $answer_code): ?>
+                            <li><?php echo $answer_code?></li>
+                        <?php endforeach;?>
+                    </ul>
+                <?php else: ?>
+                    <h5>Members Codes List:
+                    <b>Not Defined</b></h5>
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php //skamnev - debug information END?>
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
